@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PrestamoApp.PagarHojaRutaPage"
+             Title="Registrar Pago"
+             BackgroundColor="White">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <!-- Título -->
+            <Label Text="Registro de Pago"
+                   FontSize="22"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="Black" />
+
+            <!-- Crédito seleccionado -->
+            <Label Text="Crédito Seleccionado:"
+                   FontAttributes="Bold"
+                   FontSize="16" />
+            <Label x:Name="lblCredito" FontSize="14" TextColor="Gray" />
+
+            <!-- Próxima cuota -->
+            <Label Text="Próxima cuota a pagar:"
+                   FontAttributes="Bold"
+                   FontSize="16" />
+            <Label x:Name="entryMontoCuota"
+                   FontSize="18"
+                   TextColor="Black"
+                   FontAttributes="Bold" />
+
+            <!-- Monto ingresado -->
+            <Label Text="Monto que desea pagar:"
+                   FontAttributes="Bold"
+                   FontSize="16" />
+            <Entry x:Name="entryMontoPagado"
+                   Keyboard="Numeric"
+                   Placeholder="Ej: 5000"
+                   FontSize="18"
+                   TextColor="Black" />
+
+            <!-- Fecha de pago -->
+            <Label Text="Fecha del Pago:"
+                   FontAttributes="Bold"
+                   FontSize="16" />
+            <DatePicker x:Name="datePickerPago"
+                        Format="dd/MM/yyyy"
+                        FontSize="16"
+                        TextColor="Black"
+                        BackgroundColor="White" />
+
+            <!-- Botón registrar -->
+            <Button Text="Registrar Pago"
+                    Clicked="OnRegistrarPagoClicked"
+                    BackgroundColor="#27AE60"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="10"
+                    HeightRequest="50"
+                    Margin="0,20,0,0" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

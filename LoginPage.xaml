@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PrestamoApp.LoginPage"
+             Title="LoginPage"
+             BackgroundColor="White">
+
+    <VerticalStackLayout Padding="30" Spacing="15" VerticalOptions="Center">
+
+        <!-- Logo -->
+        <Image Source="credimax_logo.png"
+               HeightRequest="300"
+               Aspect="AspectFit"
+               HorizontalOptions="Center"
+               Margin="0,0,0,10" />
+
+        <!-- Título -->
+        
+
+        <!-- Campo usuario -->
+        <Entry x:Name="entryUsuario"
+               Placeholder="Usuario"
+               Keyboard="Default"
+               ReturnType="Next"
+               TextColor="Black"
+               PlaceholderColor="Gray" />
+
+        <!-- Campo contraseña -->
+        <Entry x:Name="entryContrasena"
+               Placeholder="Contraseña"
+               IsPassword="True"
+               ReturnType="Done"
+               TextColor="Black"
+               PlaceholderColor="Gray" />
+
+        <!-- Botón login -->
+        <Button Text="Iniciar sesión"
+                Clicked="OnLoginClicked"
+                BackgroundColor="#007AFF"
+                TextColor="White"
+                CornerRadius="8" />
+
+        <!-- Mensaje de error -->
+        <Label x:Name="lblMensaje"
+               Text=""
+               TextColor="Red"
+               HorizontalOptions="Center" />
+
+        <!-- Olvidó contraseña -->
+        <Label Text="¿Olvidaste tu contraseña?"
+               FontSize="14"
+               HorizontalOptions="Center"
+               TextColor="Gray">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnOlvidasteContrasena" />
+            </Label.GestureRecognizers>
+        </Label>
+
+    </VerticalStackLayout>
+</ContentPage>

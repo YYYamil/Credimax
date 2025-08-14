@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PrestamoApp.ModificarCliente">
+    <VerticalStackLayout Padding="30" Spacing="10">
+        <Label Text="Modificar Cliente" FontSize="Large" HorizontalOptions="Center" />
+
+        <!-- Campo de búsqueda -->
+        <HorizontalStackLayout Spacing="10">
+            <Entry x:Name="entrySearch" Placeholder="Ingrese Apellido o Nombre" />
+            <Button Text="Buscar" Clicked="OnSearchClicked" />
+        </HorizontalStackLayout>
+
+        <!-- Lista de resultados -->
+        <CollectionView x:Name="clientesList"
+                        HeightRequest="150"
+                        SelectionMode="Single"
+                        SelectionChanged="OnClienteSelected">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="5" ColumnDefinitions="*, Auto">
+                        <Label Grid.Column="0" Text="{Binding NombreCompleto}" />
+                        <Label Grid.Column="1" Text="{Binding Id_Personas}" HorizontalOptions="End" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Formulario editable -->
+        <Entry x:Name="entryApellido" Placeholder="Apellido" />
+        <Entry x:Name="entryNombre" Placeholder="Nombre" />
+        <Entry x:Name="entryDireccion" Placeholder="Dirección" />
+        <Entry x:Name="entryCelular" Placeholder="Celular" />
+        <Picker x:Name="pickerZona" Title="Seleccione Zona">
+            <Picker.Items>
+                <x:String>Zona 1</x:String>
+                <x:String>Zona 2</x:String>
+                <x:String>Zona 3</x:String>
+                <x:String>Zona 4</x:String>
+            </Picker.Items>
+        </Picker>
+
+        <!-- Botón para guardar -->
+        <Button x:Name="btnGuardar" Text="Guardar" Clicked="OnGuardarClicked" />
+    </VerticalStackLayout>
+</ContentPage>

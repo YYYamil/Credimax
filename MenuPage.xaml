@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PrestamoApp.MenuPage"
+             Title="Menú Principal"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#F8F9FA">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- Colores corporativos para créditos -->
+            <Color x:Key="PrimaryColor">#2A5C99</Color>
+            <Color x:Key="SecondaryColor">#4CAF50</Color>
+            <Color x:Key="AccentColor">#FFA500</Color>
+            <Color x:Key="LightBackground">#F8F9FA</Color>
+            <Color x:Key="CardBackground">#FFFFFF</Color>
+
+            <!-- Estilos reutilizables -->
+            <Style x:Key="MenuButton" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="CornerRadius" Value="12"/>
+                <Setter Property="HeightRequest" Value="60"/>
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="WidthRequest" Value="320"/>
+                <Setter Property="Margin" Value="0,0,0,15"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid ZIndex="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Repetición de imágenes -->
+            <Image Grid.Row="0" Grid.Column="0" Source="credimax_logo.png" Opacity="0.08" Aspect="AspectFit"/>
+            <Image Grid.Row="0" Grid.Column="1" Source="credimax_logo.png" Opacity="0.08" Aspect="AspectFit"/>
+            <Image Grid.Row="0" Grid.Column="2" Source="credimax_logo.png" Opacity="0.08" Aspect="AspectFit"/>
+
+            <Image Grid.Row="1" Grid.Column="0" Source="credimax_logo.png" Opacity="0.08" Aspect="AspectFit"/>
+            <Image Grid.Row="1" Grid.Column="1" Source="credimax_logo.png" Opacity="0.08" Aspect="AspectFit"/>
+            <Image Grid.Row="1" Grid.Column="2" Source="credimax_logo.png" Opacity="0.08" Aspect="AspectFit"/>
+
+            <Image Grid.Row="2" Grid.Column="0" Source="credimax_logo.png" Opacity="0.08" Aspect="AspectFit"/>
+            <Image Grid.Row="2" Grid.Column="1" Source="credimax_logo.png" Opacity="0.08" Aspect="AspectFit"/>
+            <Image Grid.Row="2" Grid.Column="2" Source="credimax_logo.png" Opacity="0.08" Aspect="AspectFit"/>
+        </Grid>
+
+        <ScrollView ZIndex="1">
+            <StackLayout Padding="20" Spacing="0"
+                         VerticalOptions="Start"
+                         HorizontalOptions="Center">
+
+                <!-- Encabezado -->
+                <StackLayout Spacing="10" HorizontalOptions="Center" Margin="0,20,0,30">
+                    <Image Source="logo_small.png" 
+                           HeightRequest="70"
+                           WidthRequest="70"
+                           HorizontalOptions="Center"/>
+
+                    <Label Text="Menú Principal"
+                           FontSize="26"
+                           TextColor="#2C3E50"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"/>
+
+                    <!--<Label Text="Gestión Integral de Préstamos"
+                           FontSize="14"
+                           TextColor="#7F8C8D"
+                           HorizontalOptions="Center"/>-->
+                </StackLayout>
+
+                <!-- Botones del menú -->
+                <Button Text="ALTA CLIENTE"
+                        Clicked="OnAltaClienteClicked"
+                        Style="{StaticResource MenuButton}"/>
+
+                <Button Text="ALTA CRÉDITO"
+                        Clicked="OnAltaCreditoClicked"
+                        Style="{StaticResource MenuButton}"
+                        BackgroundColor="{StaticResource SecondaryColor}"/>
+
+                <Button Text="LISTADO CLIENTES"
+                        Clicked="OnListadoClicked"
+                        Style="{StaticResource MenuButton}"
+                        BackgroundColor="#34495e"/>
+
+
+
+                <Button Text="CREAR HOJA DE RUTA"
+                        Clicked="OnRutaClicked"
+                        Style="{StaticResource MenuButton}"
+                        BackgroundColor="#5D8BF4"/>
+
+                <Button Text="VER HOJA DE RUTA"
+                        Clicked="OnVerRutaClicked"
+                        Style="{StaticResource MenuButton}"
+                        BackgroundColor="#7E57C2"/>
+
+                <Button Text="CONSULTAS"
+                        Clicked="MenuConsultaClick"
+                        Style="{StaticResource MenuButton}"
+                        BackgroundColor="#34495e"/>
+
+
+                <Button Text="INGRESAR PAGO"
+                        Clicked="OnPagoClicked"
+                        Style="{StaticResource MenuButton}"
+                        BackgroundColor="{StaticResource AccentColor}"/>
+                
+                <!--<Button Text="Modificaciones"
+                        Clicked="OnModificacionesClicked"
+                        Style="{StaticResource MenuButton}"
+                        BackgroundColor="Red"/>-->
+
+
+
+                <!-- Pie de página -->
+                <Label Text="CrediMax © 2025"
+                       FontSize="12"
+                       TextColor="#95A5A6"
+                       HorizontalOptions="Center"
+                       Margin="0,30"/>
+            </StackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

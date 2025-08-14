@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PrestamoApp.CreditosPage"
+             Title="CreditosPage">
+
+    <CollectionView ItemsSource="{Binding Creditos}" SelectionChanged="OnCreditoSeleccionado">
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <Frame BorderColor="Gray" Margin="10" Padding="10">
+                    <StackLayout>
+                        <Label Text="{Binding TipoCredito}" FontAttributes="Bold" FontSize="16"/>
+                        <Label Text="Observación:" FontAttributes="Bold"/>
+                        <Label Text="{Binding Observacion}"/>
+                        <Label Text="Importe de Cuota:" FontAttributes="Bold"/>
+                        <Label Text="{Binding ImporteCuota, StringFormat='${0:F2}'}"/>
+                    </StackLayout>
+                </Frame>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+
+
+
+
+</ContentPage>
+
+
+

@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:sys="clr-namespace:System;assembly=netstandard"
+             xmlns:local="clr-namespace:PrestamoApp"
+             x:Class="PrestamoApp.AltaCreditoPage"
+             Title="Alta de Crédito"
+             BackgroundColor="White">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:CountToVisibilityConverter x:Key="CountToVisibilityConverter" />
+            <local:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <StackLayout Padding="20" Spacing="10">
+
+            <Label Text="Alta de Crédito"
+                   FontSize="20"
+                   TextColor="#2C3E50"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
+
+            <!-- Buscador de Cliente -->
+            <Frame HasShadow="False" BorderColor="#BDC3C7" CornerRadius="10" Padding="10" BackgroundColor="#ECF0F1">
+                <StackLayout>
+                    <Grid>
+                        <Entry x:Name="entryBuscarApellido"
+                               Placeholder="Ingresa el Apellido a buscar"
+                               PlaceholderColor="Black"
+                               TextColor="#2C3E50"
+                               FontSize="16"
+                               BackgroundColor="Transparent"
+                               Text="{Binding ApellidoBusqueda, Mode=TwoWay}"
+                               TextChanged="OnApellidoBusquedaTextChanged"/>
+                        <Label x:Name="labelClienteSeleccionado"
+                               Text="{Binding ClienteSeleccionado.NombreCompleto}"
+                               FontSize="16"
+                               TextColor="#2C3E50"
+                               IsVisible="{Binding ClienteSeleccionado, Converter={StaticResource NullToVisibilityConverter}}"
+                               VerticalOptions="Center"
+                               Margin="10,0,0,0"/>
+                    </Grid>
+                    <ActivityIndicator IsRunning="{Binding IsSearching}"
+                                     Color="#2980B9"
+                                     IsVisible="{Binding IsSearching}"
+                                     HorizontalOptions="Center"
+                                     Margin="0,10"/>
+                </StackLayout>
+            </Frame>
+
+            <Button Text="BUSCAR CLIENTE"
+                    Clicked="OnBuscarClienteClicked"
+                    BackgroundColor="#27AE60"
+                    TextColor="White"
+                    CornerRadius="10"
+                    HeightRequest="45" />
+
+            <!-- Lista de Clientes encontrados -->
+            <Frame HasShadow="False" 
+                   BorderColor="#BDC3C7" 
+                   CornerRadius="10" 
+                   Padding="10" 
+                   BackgroundColor="#ECF0F1"
+                   IsVisible="{Binding Source={x:Reference collectionClientes}, Path=ItemsSource.Count, Converter={StaticResource CountToVisibilityConverter}}">
+
+                <CollectionView x:Name="collectionClientes" 
+                               ItemsSource="{Binding Clientes}"
+                               SelectionMode="Single" 
+                               SelectionChanged="OnClienteSeleccionado"
+                               HeightRequest="150">
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Label Text="{Binding NombreCompleto}" 
+                                   Padding="15" 
+                                   FontSize="16" 
+                                   TextColor="#2C3E50"/>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Frame>
+
+
+           
+            <StackLayout>
+                <!-- Label del título -->
+                <HorizontalStackLayout Spacing="8" Margin="0,0,0,5">
+                    <Label Text="Seleccione TIPO de Crédito:"
+               FontAttributes="Bold"
+               FontSize="14" 
+               TextColor="#2C3E50"
+               VerticalOptions="Center"/>
+                    <Label Text="▼"
+               TextColor="#27AE60"
+               FontSize="12"
+               VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+
+                <!-- Picker con Frame transparente para las esquinas -->
+                <Frame HasShadow="False"
+           CornerRadius="10"
+           Padding="0"
+           BackgroundColor="#27AE60"
+           HeightRequest="50">
+
+                    <Picker x:Name="pickerTipoCredito"
+                
+                TitleColor="#AAAAAA"
+                TextColor="White"
+                FontSize="16"
+                BackgroundColor="Transparent"
+                HorizontalOptions="Fill"
+                VerticalOptions="Center">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Efectivo</x:String>
+                                <x:String>Artículo</x:String>
+                                <x:String>Zapatilla</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                </Frame>
+            </StackLayout>
+
+            <!-- Monto del Crédito -->
+            <Frame HasShadow="False" BorderColor="#BDC3C7" CornerRadius="10" Padding="10" BackgroundColor="#ECF0F1">
+                <Entry x:Name="entryMonto"
+                       Placeholder="Monto del Crédito"
+                               PlaceholderColor="Black"
+                       TextColor="#2C3E50"
+                       Keyboard="Numeric"
+                       FontSize="16"
+                       BackgroundColor="Transparent" 
+                       IsReadOnly="False"/>
+            </Frame>
+
+            <!-- Interés -->
+            <Frame HasShadow="False" BorderColor="#BDC3C7" CornerRadius="10" Padding="10" BackgroundColor="#ECF0F1">
+                <Entry x:Name="entryInteres"
+                       Placeholder="Interés (%)"
+                               PlaceholderColor="Black"
+                       TextColor="#2C3E50"
+                       Keyboard="Numeric"
+                       FontSize="16"
+                       BackgroundColor="Transparent" />
+            </Frame>
+
+                      
+
+            <!-- Forma de Pago - Versión mejorada -->
+            <StackLayout>
+                <!-- Label del título -->
+                <HorizontalStackLayout Spacing="8" Margin="0,0,0,5">
+                    <Label Text="Seleccione FORMA de Pago:"
+FontAttributes="Bold"
+FontSize="14" 
+TextColor="#2C3E50"
+VerticalOptions="Center"/>
+                    <Label Text="▼"
+TextColor="#27AE60"
+FontSize="12"
+VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+
+                <!-- Picker con Frame -->
+                <Frame HasShadow="False"
+           
+           CornerRadius="10"
+           Padding="0"
+           BackgroundColor="#27AE60"
+           HeightRequest="50">
+
+                    <Picker x:Name="pickerFormaPago"
+                
+                TitleColor="White"
+                TextColor="White"
+                FontSize="16"
+                BackgroundColor="#27AE60"
+                HorizontalOptions="Fill"
+                VerticalOptions="Center"
+                Margin="0">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Semanal</x:String>
+                                <x:String>Quincenal</x:String>
+                                <x:String>Mensual</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                </Frame>
+            </StackLayout>
+
+            <!-- Número de Cuotas -->
+            <Frame HasShadow="False" BorderColor="#BDC3C7" CornerRadius="10" Padding="10" BackgroundColor="#ECF0F1">
+                <Entry x:Name="entryNumCuotas"
+                       Placeholder="Número de Cuotas"
+                               PlaceholderColor="Black"
+                       TextColor="#2C3E50"
+                       Keyboard="Numeric"
+                       FontSize="16"
+                       BackgroundColor="Transparent" />
+            </Frame>
+
+            <!-- Fecha de Otorgamiento -->
+            <Label Text="Fecha de Otorgamiento" 
+                   FontAttributes="Bold" 
+                   FontSize="14" 
+                   TextColor="#2C3E50" 
+                   Margin="0,10,0,0"/>
+
+            <Frame HasShadow="False" BorderColor="#BDC3C7" CornerRadius="10" Padding="10" BackgroundColor="#ECF0F1">
+                <DatePicker x:Name="datePickerOtorgamiento"
+                            Format="dd/MM/yyyy"
+                            TextColor="#2C3E50"
+                            FontSize="16"
+                            BackgroundColor="Transparent"
+                            HeightRequest="50" />
+            </Frame>
+
+            <!-- Fecha de inicio -->
+            <Label Text="Fecha de Inicio (Pago de 1era cuota)" 
+                   FontAttributes="Bold" 
+                   FontSize="14" 
+                   TextColor="#2C3E50" 
+                   Margin="0,10,0,0"/>
+
+            <Frame HasShadow="False" BorderColor="#BDC3C7" CornerRadius="10" Padding="10" BackgroundColor="#ECF0F1">
+                <DatePicker x:Name="datePickerInicio"
+                            Format="dd/MM/yyyy"
+                            TextColor="#2C3E50"
+                            FontSize="16"
+                            BackgroundColor="Transparent"
+                            HeightRequest="50" />
+            </Frame>
+
+            <!-- Monto por Cuota -->
+            <!--<Label Text="Monto por Cuota"
+                   FontAttributes="Bold"
+                   FontSize="14"
+                   TextColor="#2C3E50" />
+            <Frame HasShadow="False" BorderColor="#BDC3C7" CornerRadius="10" Padding="10" BackgroundColor="#ECF0F1">
+                <Entry x:Name="entryMontoCuota"
+                       
+                       TextColor="#2C3E50"
+                       FontSize="16"
+                       BackgroundColor="Transparent" 
+                       IsReadOnly="False"/>
+            </Frame>-->
+            <StackLayout>
+                <Label Text="Monto Cuota:" />
+                <Entry x:Name="entryMontoCuota"
+           Placeholder="Calculado automáticamente"
+           IsReadOnly="True"
+           Keyboard="Numeric" />
+
+                <CheckBox x:Name="chkEditarMontoCuota"
+              CheckedChanged="OnEditarMontoCuotaChanged" />
+                <Label Text="Editar manualmente" />
+            </StackLayout>
+
+
+            <!-- Observación -->
+            <Frame HasShadow="False" BorderColor="#BDC3C7" CornerRadius="10" Padding="10" BackgroundColor="#ECF0F1">
+                <Entry x:Name="entryObservacion"
+                       Placeholder="Descripcion del Credito"
+                               PlaceholderColor="Black"
+                       TextColor="#2C3E50"
+                       FontSize="16"
+                       BackgroundColor="Transparent"
+                       HeightRequest="80"
+                       MaxLength="200"
+                       VerticalOptions="Start" />
+            </Frame>
+
+            <!-- Botón Guardar -->
+            <Button Text="GUARDAR CREDITO"
+                    Clicked="OnGuardarCreditoClicked"
+                    BackgroundColor="#27AE60"
+                    TextColor="White"
+                    CornerRadius="10"
+                    HeightRequest="50" />
+
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

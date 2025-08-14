@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:PrestamoApp"
+             x:Class="PrestamoApp.ZonaPage"
+             Title="Clientes por Zona ">
+
+    <StackLayout>
+        <VerticalStackLayout Padding="10">
+            <HorizontalStackLayout Spacing="8" Margin="0,0,0,5">
+                <Label Text="Seleccione FORMA de Pago:"
+                   FontAttributes="Bold"
+                   FontSize="14" 
+                   TextColor="#2C3E50"
+                   VerticalOptions="Center"/>
+                <Label Text="▼"
+                   TextColor="#27AE60"
+                   FontSize="12"
+                   VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+            <Picker ItemsSource="{Binding FormasPago}"
+                SelectedItem="{Binding FormaPagoSeleccionada}"
+                Margin="0,5,0,0"/>
+        </VerticalStackLayout>
+
+        <RefreshView x:Name="refreshView"
+                     Command="{Binding LoadClientesCommand}"
+                     IsRefreshing="{Binding IsBusy}">
+
+            <CollectionView ItemsSource="{Binding Clientes}"
+                            EmptyView="No hay clientes en esta zona"
+                            SelectionMode="None">
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="10"
+                              ColumnDefinitions="Auto, *, Auto"
+                              RowDefinitions="Auto, Auto, Auto">
+
+                            <Label Grid.Column="0" Grid.Row="0" Grid.RowSpan="3"
+                                   Text="{Binding Id_Personas}"
+                                   FontAttributes="Bold"
+                                   VerticalOptions="Center"
+                                   Margin="0,0,10,0"/>
+
+                            <Label Grid.Column="1" Grid.Row="0"
+                                   Text="{Binding NombreCompleto}"
+                                   FontAttributes="Bold"/>
+
+                            <Label Grid.Column="1" Grid.Row="1"
+                                   Text="{Binding Direccion}"
+                                   FontSize="Small"/>
+
+                            <Label Grid.Column="1" Grid.Row="2"
+                                   Text="{Binding Cel}"
+                                   FontSize="Small"
+                                   TextColor="Blue"/>
+
+                            <Button Grid.Column="2" Grid.Row="0" Grid.RowSpan="3"
+                                    Text="Ver"
+                                    WidthRequest="80"
+                                    HeightRequest="10"
+                                    VerticalOptions="Center"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:ZonaPage}}, Path=BindingContext.VerClienteCommand}"
+                                    CommandParameter="{Binding .}"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </StackLayout>
+</ContentPage>

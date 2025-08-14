@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PrestamoApp.VerHojaRuta"
+             Title="VerHojaRuta">
+
+    <Grid RowDefinitions="Auto, *">
+        <!-- Sección estática para el botón en la parte superior -->
+        <HorizontalStackLayout Grid.Row="0" Padding="10" BackgroundColor="#F5F5F5">
+            <Button Text="Exportar PDF"
+        Clicked="OnExportarPDFClicked"
+        BackgroundColor="LightBlue"
+        TextColor="Black"
+        Padding="10"/>
+
+        </HorizontalStackLayout>
+
+        <!-- Sección dinámica para el CollectionView -->
+        <CollectionView Grid.Row="1"
+                       ItemsSource="{Binding HojaRutaDatos}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BorderColor="LightGray" Margin="10" Padding="10">
+                        <Grid ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Nombre}" FontAttributes="Bold" />
+                                <Label Text="{Binding TipoCredito, StringFormat='Tipo Crédito: {0}'}" />
+                                <Label Text="{Binding ValorCredito, StringFormat='Monto Crédito: ${0:N2}'}" />
+                                <Label Text="{Binding ImporteCuota, StringFormat='Importe Cuota: ${0:N2}'}" />
+                                <Label Text="{Binding FechaUltimoPago, StringFormat='Fecha Último Pago: {0:dd/MM/yyyy}'}" />
+                                <Label Text="{Binding MontoUltimoPago, StringFormat='Monto Último Pago: ${0:N2}'}" />
+                                <Label Text="{Binding SaldoALaFecha, StringFormat='Saldo: ${0:N2}'}" />
+                            </VerticalStackLayout>
+
+                            <Button Grid.Column="1"
+                                    Text="PAGAR"
+                                    CommandParameter="{Binding}"
+                                    Clicked="OnPagarClicked"
+                                    VerticalOptions="Center"
+                                    BackgroundColor="Green"
+                                    TextColor="White" />
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>
+

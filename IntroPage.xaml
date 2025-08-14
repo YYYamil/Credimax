@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+  BackgroundColor="White"
+             x:Class="PrestamoApp.IntroPage"
+             Title="IntroPage">
+
+
+    <Grid>
+        <!-- Logo centrado con tamaño adaptable -->
+        <Image Source="logo_intro.png"
+               Aspect="AspectFit"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               MaximumWidthRequest="300"
+               MaximumHeightRequest="300"
+               Margin="20"/>
+    </Grid>
+</ContentPage>
+
+
+
+
+
+
+

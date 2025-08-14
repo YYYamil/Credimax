@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PrestamoApp.RutaPage"
+             Title="Selección de Zona"
+             BackgroundColor="#f5f5f5">
+
+    <Grid>
+        <!-- Fondo sutil -->
+        <BoxView BackgroundColor="#f5f5f5"/>
+
+        <StackLayout Padding="20" Spacing="30">
+            <!-- Encabezado -->
+            <StackLayout HorizontalOptions="Center" Spacing="10">
+                <Label Text="Hoja de Ruta"
+                       FontSize="28"
+                       TextColor="#2C3E50"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center" />
+
+                <Label Text="Seleccione la zona a gestionar"
+                       FontSize="14"
+                       TextColor="#7f8c8d"
+                       HorizontalOptions="Center"/>
+            </StackLayout>
+
+            <!-- Botones de zonas en grid -->
+            <Grid RowDefinitions="*,*" 
+                  ColumnDefinitions="*,*"
+                  RowSpacing="20" 
+                  ColumnSpacing="20"
+                  VerticalOptions="Center">
+
+                <!-- Zona 1 --><!--
+                <Button Text="ZONA 1" 
+                        Grid.Row="0" Grid.Column="0"
+                        BackgroundColor="#3498db"
+                        TextColor="White"
+                        CornerRadius="10"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        HeightRequest="120"
+                        Clicked="OnZonaClicked">
+                    <Button.Shadow>
+                        <Shadow Brush="#3498db"
+                                Offset="0,5"
+                                Opacity="0.3"
+                                Radius="10"/>
+                    </Button.Shadow>
+                    <Button.ImageSource>
+                        <FontImageSource Glyph="&#xf041;"
+                                        FontFamily="FontAwesome"
+                                        Color="White"
+                                        Size="30"/>
+                    </Button.ImageSource>
+                </Button>-->
+                <!-- Zona 1 -->
+                <Button Text="Zona 1" 
+        Grid.Row="0" Grid.Column="0"
+        BackgroundColor="#f39c12"
+        TextColor="White"
+        CornerRadius="10"
+        FontSize="18"
+        FontAttributes="Bold"
+        HeightRequest="120"
+        Clicked="OnZonaClicked">
+                    <Button.Shadow>
+                        <Shadow Brush="#f39c12"
+                Offset="0,5"
+                Opacity="0.3"
+                Radius="10"/>
+                    </Button.Shadow>
+                    <Button.ImageSource>
+                        <FontImageSource Glyph="&#xf041;"
+                        FontFamily="FontAwesome"
+                        Color="White"
+                        Size="30"/>
+                    </Button.ImageSource>
+                </Button>
+
+                <!-- Zona 2 -->
+                <Button Text="Zona 2" 
+                        Grid.Row="0" Grid.Column="1"
+                        BackgroundColor="#2ecc71"
+                        TextColor="White"
+                        CornerRadius="10"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        HeightRequest="120"
+                        Clicked="OnZonaClicked">
+                    <Button.Shadow>
+                        <Shadow Brush="#2ecc71"
+                                Offset="0,5"
+                                Opacity="0.3"
+                                Radius="10"/>
+                    </Button.Shadow>
+                    <Button.ImageSource>
+                        <FontImageSource Glyph="&#xf041;"
+                                        FontFamily="FontAwesome"
+                                        Color="White"
+                                        Size="30"/>
+                    </Button.ImageSource>
+                </Button>
+
+                <!-- Zona 3 -->
+                <Button Text="Zona 3" 
+                        Grid.Row="1" Grid.Column="0"
+                        BackgroundColor="#e74c3c"
+                        TextColor="White"
+                        CornerRadius="10"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        HeightRequest="120"
+                        Clicked="OnZonaClicked">
+                    <Button.Shadow>
+                        <Shadow Brush="#e74c3c"
+                                Offset="0,5"
+                                Opacity="0.3"
+                                Radius="10"/>
+                    </Button.Shadow>
+                    <Button.ImageSource>
+                        <FontImageSource Glyph="&#xf041;"
+                                        FontFamily="FontAwesome"
+                                        Color="White"
+                                        Size="30"/>
+                    </Button.ImageSource>
+                </Button>
+
+                <!-- Zona 4 -->
+                <Button Text="Zona 4" 
+                        Grid.Row="1" Grid.Column="1"
+                        BackgroundColor="#f39c12"
+                        TextColor="White"
+                        CornerRadius="10"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        HeightRequest="120"
+                        Clicked="OnZonaClicked">
+                    <Button.Shadow>
+                        <Shadow Brush="#f39c12"
+                                Offset="0,5"
+                                Opacity="0.3"
+                                Radius="10"/>
+                    </Button.Shadow>
+                    <Button.ImageSource>
+                        <FontImageSource Glyph="&#xf041;"
+                                        FontFamily="FontAwesome"
+                                        Color="White"
+                                        Size="30"/>
+                    </Button.ImageSource>
+                </Button>
+            </Grid>
+
+            <!-- Pie de página -->
+            <Label Text="CrediMax - Gestión de Rutas"
+                   FontSize="12"
+                   TextColor="#95a5a6"
+                   HorizontalOptions="Center"
+                   Margin="0,20,0,0"/>
+        </StackLayout>
+    </Grid>
+</ContentPage>

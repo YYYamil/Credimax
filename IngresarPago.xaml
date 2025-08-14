@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PrestamoApp.IngresarPago"
+             Title="IngresarPago">
+    <VerticalStackLayout Padding="20" Spacing="15">
+
+            <Label Text="Cliente:" FontAttributes="Bold" />
+            <Label x:Name="lblNombre" />
+
+            <Label Text="Tipo de Crédito:" FontAttributes="Bold" />
+            <Label x:Name="lblTipoCredito" />
+
+            <Label Text="Importe de Cuota Pendiente:" FontAttributes="Bold" />
+            <Label x:Name="lblImporteCuota" />
+
+            <Label Text="Fecha de Vencimiento:" FontAttributes="Bold" />
+            <Label x:Name="lblFechaVto" />
+
+            <Label Text="Ingrese Monto a Pagar:" FontAttributes="Bold" />
+            <Entry x:Name="txtMonto" Keyboard="Numeric" Placeholder="0.00" />
+
+            <Button Text="Aceptar Pago" Clicked="OnAceptarPagoClicked" BackgroundColor="Green" TextColor="White"/>
+
+        </VerticalStackLayout>
+
+</ContentPage>

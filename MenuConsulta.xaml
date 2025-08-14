@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PrestamoApp.MenuConsulta"
+             Title="Menú de Consultas"
+             BackgroundColor="{AppThemeBinding Light=#F8F9FA, Dark=#121212}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- Colores principales -->
+            <Color x:Key="PrimaryColor">#2B0B98</Color>
+            <Color x:Key="SecondaryColor">#4A1DB5</Color>
+            <Color x:Key="LightText">#FFFFFF</Color>
+            <Color x:Key="DarkText">#333333</Color>
+
+            <!-- Estilo para botones -->
+            <Style TargetType="Button" x:Key="MenuButtonStyle">
+                <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
+                <Setter Property="TextColor" Value="{StaticResource LightText}"/>
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="HeightRequest" Value="90"/>
+                <Setter Property="CornerRadius" Value="12"/>
+                <Setter Property="Margin" Value="20,10"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="HorizontalOptions" Value="Fill"/>
+            </Style>
+
+            <!-- Estilo para sombras -->
+            <Style TargetType="Frame">
+                <Setter Property="HasShadow" Value="True"/>
+                <Setter Property="Shadow" Value="{Shadow Offset='0,5', Opacity=0.2, Radius=10}"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="30" Padding="20" VerticalOptions="Center">
+
+            <!-- Encabezado con logo y título -->
+            <Frame HorizontalOptions="Center"
+                   BackgroundColor="Transparent"
+                   Padding="0"
+                   HasShadow="False">
+                <VerticalStackLayout Spacing="10">
+                    <Image Source="logo.png"
+                           HeightRequest="120"
+                           Aspect="AspectFit"
+                           HorizontalOptions="Center"/>
+
+                    <Label Text="Consultas Crediticias"
+                           FontSize="24"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           TextColor="{AppThemeBinding Light={StaticResource PrimaryColor}, Dark={StaticResource LightText}}"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Contenedor de botones -->
+            <Frame BorderColor="{AppThemeBinding Light=#E0E0E0, Dark=#333333}"
+                   BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                   CornerRadius="15"
+                   Padding="20,30"
+                   HorizontalOptions="Fill"
+                   VerticalOptions="Center">
+
+                <VerticalStackLayout Spacing="25">
+
+                    <!-- Botón Listado de Clientes
+                    <Button Text="Listado de Clientes"
+                            Clicked="OnListadoClicked"
+                            Style="{StaticResource MenuButtonStyle}">
+                        <Button.ImageSource>
+                            <FontImageSource FontFamily="MaterialDesignIcons"
+                                         Glyph="&#xF2C2;"
+                                         Color="{StaticResource LightText}"
+                                         Size="24"/>
+                        </Button.ImageSource>
+                    </Button> -->
+
+                    <!-- Botón Estadísticas Contables -->
+                    <Button Text="INFORMES"
+                            Clicked="OnContabilidadClicked"
+                            Style="{StaticResource MenuButtonStyle}"
+                            BackgroundColor="{StaticResource SecondaryColor}">
+                        <Button.ImageSource>
+                            <FontImageSource FontFamily="MaterialDesignIcons"
+                                         Glyph="&#xF1C0;"
+                                         Color="{StaticResource LightText}"
+                                         Size="24"/>
+                        </Button.ImageSource>
+                    </Button>
+
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Pie de página -->
+            <Label Text="Versión 1.0.0"
+                   FontSize="12"
+                   TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}"
+                   HorizontalOptions="Center"
+                   Margin="0,20"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

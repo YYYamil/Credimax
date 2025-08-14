@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:PrestamoApp"
+             x:Class="PrestamoApp.HojaDeRuta"
+             Title="Hoja de Ruta"
+             BackgroundColor="#F5F5F5">
+    <ScrollView>
+        <StackLayout Padding="20" Spacing="15">
+            <!--<Frame CornerRadius="10" Padding="15" BackgroundColor="White" HasShadow="True">
+                <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Large" TextColor="#2C3E50" />
+            </Frame>-->
+            <Frame CornerRadius="10" Padding="15" BackgroundColor="White" HasShadow="True">
+                <StackLayout>
+                    <Label Text="Cliente:" FontAttributes="Bold" TextColor="#34495E" />
+                    <Label Text="{Binding Cliente.NombreCompleto}" TextColor="#2C3E50" />
+                    <Label Text="{Binding Cliente.Direccion}" TextColor="#7F8C8D" />
+                    <Label Text="{Binding Cliente.Cel, StringFormat='Teléfono: {0}'}" TextColor="#34495E" />
+                </StackLayout>
+            </Frame>
+            <CollectionView ItemsSource="{Binding CreditosActivos}"
+                            EmptyView="No se encontraron créditos activos"
+                            SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame CornerRadius="10" Padding="10" BackgroundColor="White" HasShadow="True" Margin="0,0,0,10">
+                            <Grid ColumnDefinitions="Auto, *, Auto" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto">
+                               
+                                <Label Grid.Column="1" Grid.Row="0"
+                                       Text="{Binding TipoCredito}" 
+                                       FontSize="Medium" 
+                                       TextColor="#2C3E50" />
+                                <Label Grid.Column="1" Grid.Row="1"
+                                       Text="{Binding Observacion}" 
+                                       FontSize="Small" 
+                                       TextColor="#7F8C8D" />
+                                <Label Grid.Column="1" Grid.Row="3"
+                                       
+                                       Text="{Binding ValorCredito, StringFormat='Valor Credito: ${0:N2}'}"
+                                       
+                                       FontSize="Small" 
+                                       TextColor="#49BF95" />
+                                <Label Grid.Column="1" Grid.Row="2"
+                                       Text="{Binding importePorCuota, StringFormat='Valor de la Cuota: ${0:N2}'}" 
+                                       FontSize="Small" 
+                                       TextColor="#E74C3C" />
+                                <Label Grid.Column="1" Grid.Row="4"
+                                       Text="{Binding SaldoALaFecha, StringFormat='Saldo: ${0:N2}'}" 
+                                       FontSize="Small" 
+                                       TextColor="#E74C3C" />
+                                <Label Grid.Column="1" Grid.Row="5"
+                                       Text="{Binding FechaUltimoPagoDisplay}" 
+                                       FontSize="Small" 
+                                       TextColor="#34495E" />
+                                <Label Grid.Column="1" Grid.Row="6"
+                                       Text="{Binding MontoUltimoPagoDisplay}" 
+                                       FontSize="Small" 
+                                       TextColor="#34495E" />
+                                <Button Grid.Column="2" Grid.Row="0" Grid.RowSpan="7"
+                                        Text="Enviar a Hoja de Ruta"
+                                        WidthRequest="200"
+                                        HeightRequest="40"
+                                        VerticalOptions="Center"
+                                        IsEnabled="{Binding Source={RelativeSource AncestorType={x:Type local:HojaDeRuta}}, Path=BindingContext.IsNotBusy}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:HojaDeRuta}}, Path=BindingContext.SaveCreditCommand}"
+                                        CommandParameter="{Binding .}" />
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
+
+
+
+
+
+

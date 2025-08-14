@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:PrestamoApp"
+             x:Class="PrestamoApp.ContabilidadPage"
+             Title="Contabilidad"
+             BackgroundColor="#FAFAFA">
+    
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:StringNotNullOrEmptyConverter x:Key="StringNotNullOrEmptyConverter" />
+            <!-- EstadoColorConverter es opcional, inclúyelo si quieres colores dinámicos -->
+            <local:EstadoColorConverter x:Key="EstadoColorConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" Padding="15">
+            <!-- Header - Estadísticas -->
+            <Frame CornerRadius="12" BackgroundColor="White" Padding="0" HasShadow="True"
+                   BorderColor="#E0E0E0">
+                <VerticalStackLayout>
+                    <Label Text="ESTADÍSTICAS GENERALES" 
+                           FontSize="16" 
+                           TextColor="#333333" 
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           Margin="0,15,0,10"/>
+                    <BoxView Color="#EEEEEE" HeightRequest="1" Margin="20,0"/>
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="*,*,*,*,*" 
+                          RowSpacing="12" ColumnSpacing="15"
+                          Padding="15,10,15,20">
+                        <!-- Fila 1 -->
+                        <Frame Grid.Column="0" Grid.Row="0" CornerRadius="8" Padding="12" 
+                               BackgroundColor="#F8F9FA" HasShadow="False" BorderColor="#E0E0E0">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="Monto Total de Créditos" FontSize="12" TextColor="#666666"/>
+                                <Label Text="{Binding TotalCreditosSolicitados, StringFormat='$ {0:N2}'}" 
+                                       FontSize="14" TextColor="#2C3E50" FontAttributes="Bold"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                        <Frame Grid.Column="1" Grid.Row="0" CornerRadius="8" Padding="12" 
+                               BackgroundColor="#F8F9FA" HasShadow="False" BorderColor="#E0E0E0">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="Monto Total Financiado" FontSize="12" TextColor="#666666"/>
+                                <Label Text="{Binding TotalFinanciado, StringFormat='$ {0:N2}'}" 
+                                       FontSize="14" TextColor="#2C3E50" FontAttributes="Bold"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                        <!-- Fila 2 -->
+                        <Frame Grid.Column="0" Grid.Row="1" CornerRadius="8" Padding="12" 
+                               BackgroundColor="#F8F9FA" HasShadow="False" BorderColor="#E0E0E0">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="Interés Ganado" FontSize="12" TextColor="#666666"/>
+                                <Label Text="{Binding InteresGanado, StringFormat='$ {0:N2}'}" 
+                                       FontSize="14" TextColor="#2C3E50" FontAttributes="Bold"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                        <Frame Grid.Column="1" Grid.Row="1" CornerRadius="8" Padding="12" 
+                               BackgroundColor="#F8F9FA" HasShadow="False" BorderColor="#E0E0E0">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="Cartera Activa" FontSize="12" TextColor="#666666"/>
+                                <Label Text="{Binding CarteraActiva, StringFormat='$ {0:N2}'}" 
+                                       FontSize="14" TextColor="#2C3E50" FontAttributes="Bold"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                        <!-- Fila 3 -->
+                        <Frame Grid.Column="0" Grid.Row="2" CornerRadius="8" Padding="12" 
+                               BackgroundColor="#F8F9FA" HasShadow="False" BorderColor="#E0E0E0">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="Créd. Activos" FontSize="12" TextColor="#666666"/>
+                                <Label Text="{Binding CantidadCreditosActivos}" 
+                                       FontSize="14" TextColor="#2C3E50" FontAttributes="Bold"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                        <Frame Grid.Column="1" Grid.Row="2" CornerRadius="8" Padding="12" 
+                               BackgroundColor="#F8F9FA" HasShadow="False" BorderColor="#E0E0E0">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="Saldo Global" FontSize="12" TextColor="#666666"/>
+                                <Label Text="{Binding SaldoGlobal, StringFormat='$ {0:N2}'}" 
+                                       FontSize="14" TextColor="#2C3E50" FontAttributes="Bold"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                        <!-- Fila 4 -->
+                        <Frame Grid.Column="0" Grid.Row="3" CornerRadius="8" Padding="12" 
+                               BackgroundColor="#F8F9FA" HasShadow="False" BorderColor="#E0E0E0">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="Saldo Actual" FontSize="12" TextColor="#666666"/>
+                                <Label Text="{Binding SaldoActual, StringFormat='$ {0:N2}'}" 
+                                       FontSize="14" TextColor="#2C3E50" FontAttributes="Bold"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                        <Frame Grid.Column="1" Grid.Row="3" CornerRadius="8" Padding="12" 
+                               BackgroundColor="#F8F9FA" HasShadow="False" BorderColor="#E0E0E0">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="Créd. Cancelados" FontSize="12" TextColor="#666666"/>
+                                <Label Text="{Binding CreditosCancelados}" 
+                                       FontSize="14" TextColor="#2C3E50" FontAttributes="Bold"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                        <!-- Fila 5 - Total Créditos Entregados con Desglose -->
+                        <Frame Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" 
+                               CornerRadius="8" Padding="12" BackgroundColor="#F1F8FE" 
+                               HasShadow="False" BorderColor="#D0E3FA">
+                            <VerticalStackLayout Spacing="10">
+                                <HorizontalStackLayout HorizontalOptions="Center" Spacing="8">
+                                    <Label Text="Total Créditos Entregados:" 
+                                           FontSize="13" TextColor="#1A73E8"/>
+                                    <Label Text="{Binding CantidadCreditosEntregados}" 
+                                           FontSize="14" TextColor="#1A73E8" FontAttributes="Bold"/>
+                                </HorizontalStackLayout>
+                                <BoxView Color="#D0E3FA" HeightRequest="1" Margin="10,0"/>
+                                <Grid ColumnDefinitions="Auto,*,Auto,*" RowDefinitions="Auto,Auto,Auto,Auto" 
+                                      RowSpacing="6" ColumnSpacing="15" Padding="10,5">
+                                    <!-- Subsección FormaPago -->
+                                    <Label Grid.Column="0" Grid.Row="0" 
+                                           Text="Por Forma de Pago" FontSize="12" 
+                                           TextColor="#333333" FontAttributes="Bold"
+                                           HorizontalOptions="Start"/>
+                                    <Label Grid.Column="0" Grid.Row="1" 
+                                           Text="Mensual:" FontSize="11" TextColor="#666666"
+                                           HorizontalOptions="Start" WidthRequest="80"/>
+                                    <Label Grid.Column="1" Grid.Row="1" 
+                                           Text="{Binding CreditosMensual}" 
+                                           FontSize="11" TextColor="#2C3E50" FontAttributes="Bold"
+                                           HorizontalOptions="Start"/>
+                                    <Label Grid.Column="0" Grid.Row="2" 
+                                           Text="Semanal:" FontSize="11" TextColor="#666666"
+                                           HorizontalOptions="Start" WidthRequest="80"/>
+                                    <Label Grid.Column="1" Grid.Row="2" 
+                                           Text="{Binding CreditosSemanal}" 
+                                           FontSize="11" TextColor="#2C3E50" FontAttributes="Bold"
+                                           HorizontalOptions="Start"/>
+                                    <Label Grid.Column="0" Grid.Row="3" 
+                                           Text="Quincenal:" FontSize="11" TextColor="#666666"
+                                           HorizontalOptions="Start" WidthRequest="80"/>
+                                    <Label Grid.Column="1" Grid.Row="3" 
+                                           Text="{Binding CreditosQuincenal}" 
+                                           FontSize="11" TextColor="#2C3E50" FontAttributes="Bold"
+                                           HorizontalOptions="Start"/>
+                                    <!-- Subsección TipoCredito -->
+                                    <Label Grid.Column="2" Grid.Row="0" 
+                                           Text="Por Tipo de Crédito" FontSize="12" 
+                                           TextColor="#333333" FontAttributes="Bold"
+                                           HorizontalOptions="Start"/>
+                                    <Label Grid.Column="2" Grid.Row="1" 
+                                           Text="Efectivo:" FontSize="11" TextColor="#666666"
+                                           HorizontalOptions="Start" WidthRequest="80"/>
+                                    <Label Grid.Column="3" Grid.Row="1" 
+                                           Text="{Binding CreditosEfectivo}" 
+                                           FontSize="11" TextColor="#2C3E50" FontAttributes="Bold"
+                                           HorizontalOptions="Start"/>
+                                    <Label Grid.Column="2" Grid.Row="2" 
+                                           Text="Zapatillas:" FontSize="11" TextColor="#666666"
+                                           HorizontalOptions="Start" WidthRequest="80"/>
+                                    <Label Grid.Column="3" Grid.Row="2" 
+                                           Text="{Binding CreditosZapatillas}" 
+                                           FontSize="11" TextColor="#2C3E50" FontAttributes="Bold"
+                                           HorizontalOptions="Start"/>
+                                    <Label Grid.Column="2" Grid.Row="3" 
+                                           Text="Artículo:" FontSize="11" TextColor="#666666"
+                                           HorizontalOptions="Start" WidthRequest="80"/>
+                                    <Label Grid.Column="3" Grid.Row="3" 
+                                           Text="{Binding CreditosArticulo}" 
+                                           FontSize="11" TextColor="#2C3E50" FontAttributes="Bold"
+                                           HorizontalOptions="Start"/>
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+            <!-- Sección Cobranza -->
+            <Frame CornerRadius="12" BackgroundColor="White" Padding="0" HasShadow="True"
+                   BorderColor="#E0E0E0">
+                <VerticalStackLayout>
+                    <Label Text="COBRANZA DEL DÍA" 
+                           FontSize="16" 
+                           TextColor="#333333" 
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           Margin="0,15,0,10"/>
+                    <BoxView Color="#EEEEEE" HeightRequest="1" Margin="20,0"/>
+                    <DatePicker Date="{Binding FechaConsulta}" 
+                                Format="dd/MM/yyyy"
+                                TextColor="#2C3E50"
+                                FontAttributes="Bold"
+                                HorizontalOptions="Center"
+                                Margin="0,10"/>
+                    <Frame CornerRadius="8" Margin="20,10,20,20" Padding="16" 
+                           BackgroundColor="#F1F8FE" HasShadow="False" BorderColor="#D0E3FA">
+                        <Label Text="{Binding CobranzaDelDia, StringFormat='Cobranza del día: $ {0:N2}'}" 
+                               FontSize="15" 
+                               TextColor="#1A73E8"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"/>
+                    </Frame>
+                </VerticalStackLayout>
+            </Frame>
+            <!-- Buscador de Clientes -->
+            <Frame CornerRadius="12" BackgroundColor="White" Padding="0" HasShadow="True"
+                   BorderColor="#E0E0E0">
+                <VerticalStackLayout>
+                    <Label Text="BUSCAR CLIENTES" 
+                           FontSize="16" 
+                           TextColor="#333333" 
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           Margin="0,15,0,10"/>
+                    <BoxView Color="#EEEEEE" HeightRequest="1" Margin="20,0"/>
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10" Padding="20,15,20,20">
+                        <Frame Grid.Column="0" CornerRadius="8" Padding="0" 
+                               BackgroundColor="White" BorderColor="#E0E0E0" HasShadow="False">
+                            <Entry x:Name="entryBuscarApellido"
+                                   Text="{Binding ApellidoBusqueda, Mode=TwoWay}" 
+                                   Placeholder="Ingrese apellido..."
+                                   PlaceholderColor="#999999"
+                                   TextColor="#333333"
+                                   ClearButtonVisibility="WhileEditing"
+                                   FontSize="14" />
+                        </Frame>
+                        <Button Grid.Column="1" Text="BUSCAR" 
+                                Command="{Binding BuscarCommand}"
+                                CornerRadius="8"
+                                BackgroundColor="#1A73E8"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                Padding="20,0"
+                                IsEnabled="{Binding ApellidoBusqueda, Converter={StaticResource StringNotNullOrEmptyConverter}}" />
+                    </Grid>
+                    <ActivityIndicator IsRunning="{Binding IsSearching}"
+                                      Color="#1A73E8"
+                                      IsVisible="{Binding IsSearching}"
+                                      HorizontalOptions="Center"
+                                      Margin="0,10"/>
+                </VerticalStackLayout>
+            </Frame>
+            <!-- Lista de Clientes -->
+            <Frame CornerRadius="12" BackgroundColor="White" Padding="0" HasShadow="True"
+                   BorderColor="#E0E0E0">
+                <VerticalStackLayout>
+                    <Label Text="CLIENTES ENCONTRADOS" 
+                           FontSize="16" 
+                           TextColor="#333333" 
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           Margin="0,15,0,10"/>
+                    <BoxView Color="#EEEEEE" HeightRequest="1" Margin="20,0"/>
+                    <CollectionView ItemsSource="{Binding Clientes}"
+                                    SelectionMode="Single"
+                                    SelectedItem="{Binding ClienteSeleccionado}"
+                                    SelectionChangedCommand="{Binding ClienteSeleccionadoCommand}"
+                                    Margin="10,10,10,15">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame CornerRadius="8" Padding="0" Margin="10,5" 
+                                       BackgroundColor="White" BorderColor="#E0E0E0" HasShadow="True">
+                                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto" 
+                                          Padding="15" RowSpacing="5" ColumnSpacing="10">
+                                        <Label Grid.Column="0" Grid.Row="0" Grid.RowSpan="3"
+                                               Text="👤" FontSize="24"
+                                               VerticalOptions="Center"/>
+                                        <Label Grid.Column="1" Grid.Row="0"
+                                               Text="{Binding NombreCompleto}" 
+                                               FontSize="14" FontAttributes="Bold"
+                                               TextColor="#333333"/>
+                                        <Label Grid.Column="1" Grid.Row="1"
+                                               Text="{Binding MontoCredito, StringFormat='Monto: $ {0:N2}'}" 
+                                               FontSize="12"
+                                               TextColor="#666666"/>
+                                        <Label Grid.Column="1" Grid.Row="2"
+                                               Text="{Binding EstadoCredito, StringFormat='Estado: {0}'}" 
+                                               FontSize="12"
+                                               TextColor="{Binding EstadoCredito, Converter={StaticResource EstadoColorConverter}}"
+                                               FontAttributes="Bold"/>
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PrestamoApp.IngresaPagoPage"
+             Title="IngresaPagoPage">
+
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <!-- Buscar cliente -->
+            <Label Text="Buscar por apellido" />
+            <Entry x:Name="txtApellido" Placeholder="Ingrese apellido" />
+
+            <Button Text="Buscar Clientes" Clicked="OnBuscarClientesClicked" BackgroundColor="#FFA500"/>
+
+            <!-- Lista de clientes -->
+            <Label Text="Seleccione el cliente" />
+            <Picker x:Name="pickerClientes" Title="Clientes" SelectedIndexChanged="OnClienteSeleccionado"/>
+
+            <!-- Créditos vigentes -->
+
+            
+            <Label Text="Seleccione un crédito: " />
+            
+            <Picker x:Name="pickerCreditos" Title="" SelectedIndexChanged="OnCreditoSeleccionado"/>
+
+            <Label x:Name="lblCantidadCreditos"
+                    FontSize="13"
+                    TextColor="Gray"
+                    FontAttributes="Italic"
+                    IsVisible="False"
+                    Margin="0,0,0,5" />
+
+            <!-- Monto de cuota (no editable) -->
+            <Label Text="Monto de la cuota" />
+            <Entry x:Name="entryMontoCuota" IsReadOnly="True"/>
+
+            <!-- Monto pagado (editable) -->
+            <Label Text="INGRESAR PAGO" />
+            <Entry x:Name="entryMontoPagado"
+                   FontSize="18"
+                    TextColor="Red"
+                    Keyboard="Numeric"
+                    Placeholder="Ingrese el monto"
+       />
+
+            <!-- Fecha de pago -->
+            <Label Text="Fecha de pago" />
+            <DatePicker x:Name="datePickerPago" />
+
+            <!-- Botón registrar -->
+            <Button Text="Registrar Pago" Clicked="OnRegistrarPagoClicked" BackgroundColor="#FFA500" TextColor="White"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+
+
+</ContentPage>

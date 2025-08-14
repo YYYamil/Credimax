@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PrestamoApp.AltaClientePage"
+             Title="Alta de Cliente"
+             BackgroundColor="#F5F7FA">
+    
+    
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- Colores mejorados -->
+            <Color x:Key="PrimaryDark">#1A365D</Color>
+            <Color x:Key="PrimaryLight">#2A5C99</Color>
+            <Color x:Key="AccentColor">#FF8C00</Color>
+            <Color x:Key="SectionBackground">#FFFFFF</Color>
+            <Color x:Key="FieldBackground">#F8F9FA</Color>
+            <Color x:Key="BorderColor">#E0E2E5</Color>
+
+            <!-- Estilos mejorados -->
+            <Style x:Key="PageTitle" TargetType="Label">
+                <Setter Property="FontSize" Value="28"/>
+                <Setter Property="TextColor" Value="{StaticResource PrimaryDark}"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="Margin" Value="0,10,0,20"/>
+            </Style>
+
+            <Style x:Key="SectionTitle" TargetType="Label">
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="TextColor" Value="{StaticResource PrimaryLight}"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="Margin" Value="15,20,15,10"/>
+            </Style>
+
+            <Style x:Key="FieldLabel" TargetType="Label">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="TextColor" Value="#444"/>
+                <Setter Property="Margin" Value="15,10,15,5"/>
+            </Style>
+
+            <Style x:Key="InputField" TargetType="Entry">
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource FieldBackground}"/>
+                <Setter Property="TextColor" Value="#333"/>
+                <Setter Property="PlaceholderColor" Value="#999"/>
+                <Setter Property="HeightRequest" Value="45"/>
+                <Setter Property="Margin" Value="15,0,15,15"/>
+              
+            </Style>
+
+            <Style x:Key="PrimaryButton" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource PrimaryDark}"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="CornerRadius" Value="8"/>
+                <Setter Property="HeightRequest" Value="50"/>
+                <Setter Property="Margin" Value="15,20"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="0">
+            <!-- Encabezado destacado -->
+            <BoxView BackgroundColor="{StaticResource PrimaryDark}" 
+                     HeightRequest="5"/>
+
+            <!-- Modificamos esta sección para agregar el botón a la derecha -->
+            <Grid Margin="15,10,15,20">
+                <Label Text="ALTA DE CLIENTE"
+                       Style="{StaticResource PageTitle}"
+                       HorizontalOptions="Center"/>
+
+                <Button Text="MODIFICAR CLIENTE"
+                        Style="{StaticResource PrimaryButton}"
+                        HorizontalOptions="End"
+                        Command="{Binding NavigateToModificarCommand}"
+                        WidthRequest="200"/>
+            </Grid>
+
+            
+
+            <!-- Sección de Información Personal -->
+            <Frame BackgroundColor="{StaticResource SectionBackground}"
+                   CornerRadius="0"
+                   Padding="0"
+                   Margin="0,0,0,15"
+                   HasShadow="False">
+                <VerticalStackLayout>
+                    <Label Text="INFORMACIÓN PERSONAL"
+                           Style="{StaticResource SectionTitle}"/>
+
+                    <Frame BackgroundColor="{StaticResource FieldBackground}"
+                           CornerRadius="10"
+                           BorderColor="{StaticResource BorderColor}"
+                           Margin="15,0,15,15"
+                           Padding="0">
+                        <Entry x:Name="entryApellido"
+                               Placeholder="Apellido *"
+                               Style="{StaticResource InputField}"/>
+                    </Frame>
+
+                    <Frame BackgroundColor="{StaticResource FieldBackground}"
+                           CornerRadius="10"
+                           BorderColor="{StaticResource BorderColor}"
+                           Margin="15,0,15,15"
+                           Padding="0">
+                        <Entry x:Name="entryNombre"
+                               Placeholder="Nombre *"
+                               Style="{StaticResource InputField}"/>
+                    </Frame>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Sección de Contacto -->
+            <Frame BackgroundColor="{StaticResource SectionBackground}"
+                   CornerRadius="0"
+                   Padding="0"
+                   Margin="0,0,0,15"
+                   HasShadow="False">
+                <VerticalStackLayout>
+                    <Label Text="DATOS DE CONTACTO"
+                           Style="{StaticResource SectionTitle}"/>
+
+                    <Frame BackgroundColor="{StaticResource FieldBackground}"
+                           CornerRadius="10"
+                           BorderColor="{StaticResource BorderColor}"
+                           Margin="15,0,15,15"
+                           Padding="0">
+                        <Entry x:Name="entryDireccion"
+                               Placeholder="Dirección completa"
+                               Style="{StaticResource InputField}"/>
+                    </Frame>
+
+                    <Frame BackgroundColor="{StaticResource FieldBackground}"
+                           CornerRadius="10"
+                           BorderColor="{StaticResource BorderColor}"
+                           Margin="15,0,15,15"
+                           Padding="0">
+                        <Entry x:Name="entryCelular"
+                               Placeholder="Celular *"
+                               Keyboard="Telephone"
+                               Style="{StaticResource InputField}"/>
+                    </Frame>
+                </VerticalStackLayout>
+            </Frame>
+
+            
+            <!-- Zona - Versión mejorada -->
+            <StackLayout>
+                <!-- Label del título -->
+                <HorizontalStackLayout Spacing="8" Margin="0,0,0,5">
+                    <Label Text="SELECCIONA ZONA:"
+               Style="{StaticResource SectionTitle}"/>
+                    <Label Text="▼"
+               Style="{StaticResource SectionTitle}"/>
+                </HorizontalStackLayout>
+
+                <!-- Picker con Frame-->
+                <Frame 
+                           CornerRadius="10"
+                           BorderColor="{StaticResource BorderColor}"
+                           Margin="15,0,15,15"
+                           Padding="0">
+
+                    <Picker x:Name="pickerZona"
+                TitleColor="#FFFFFF"
+                TextColor="White"
+                FontSize="16"
+                 BackgroundColor="#1A365D"
+                HorizontalOptions="Fill"
+                VerticalOptions="Center"
+                Margin="10">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Zona 1</x:String>
+                                <x:String>Zona 2</x:String>
+                                <x:String>Zona 3</x:String>
+                                <x:String>Zona 4</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                </Frame>
+            </StackLayout>
+
+
+            <!-- Botón de acción destacado -->
+            <Button Text="GUARDAR CLIENTE"
+                    Clicked="OnGuardarClicked"
+                    Style="{StaticResource PrimaryButton}"/>
+
+            <BoxView BackgroundColor="#F5F7FA" 
+                     HeightRequest="20"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

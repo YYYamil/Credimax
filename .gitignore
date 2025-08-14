@@ -1,0 +1,107 @@
+# .NET MAUI y .NET Core
+bin/
+obj/
+*.user
+*.suo
+*.sln.docstates
+*.csproj.user
+*.msi
+*.msix
+*.appx
+*.appxbundle
+*.appxupload
+*.nupkg
+*.snk
+
+# Archivos de compilación y empaquetado de MAUI
+**/android/bin/
+**/android/obj/
+**/ios/bin/
+**/ios/obj/
+**/macos/bin/
+**/macos/obj/
+**/windows/bin/
+**/windows/obj/
+*.aab
+*.apk
+*.apks
+*.ipa
+*.pdb
+*.mdb
+
+# Carpetas de paquetes NuGet
+packages/
+*.nuget.props
+*.nuget.targets
+
+# Archivos de configuración de Visual Studio Code
+.vscode/
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/extensions.json
+
+# Archivos temporales de Windows
+Thumbs.db
+Desktop.ini
+*.tmp
+*.bak
+*.cache
+*.log
+
+# Archivos de entorno y configuración local
+appsettings.json
+appsettings.*.json
+*.config
+*.xml
+*.json
+*.yml
+*.yaml
+.env
+*.local
+
+# Carpetas de dependencias y herramientas
+node_modules/
+bower_components/
+libman.json
+lib/
+
+# Archivos de cobertura de pruebas
+*.coverage
+*.coveragexml
+TestResults/
+coverlet/
+artifacts/
+
+# Archivos de Azure y otros servicios
+*.pubxml
+*.pubxml.user
+*.azurePipelines.yml
+*.azure-pipelines.yml
+
+# Archivos generados por el emulador/simulador
+*.ds_store
+*.DS_Store
+*.xcuserstate
+*.xcworkspace
+*.xcodeproj
+
+# Archivos de diagnóstico y depuración
+*.log
+*.log.*
+*.trace
+*.dmp
+*.mdmp
+
+# Archivos de paquetes de publicación
+publish/
+*.pubxml
+*.publishproj
+
+# Ignorar carpetas de recursos generados
+Resources/Resource.designer.cs
+Resources/Resource.Designer.cs
+
+# Ignorar archivos de configuración de entorno local
+*.Development.json
+*.Staging.json
+*.Production.json

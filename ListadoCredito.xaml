@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PrestamoApp.ListadoCredito"
+             Title="Listado de Créditos">
+    <ScrollView>
+        <VerticalStackLayout Spacing="10" Padding="10">
+            <!-- Título con el nombre del cliente -->
+        <Label x:Name="ClienteNombreLabel" 
+               FontSize="24" 
+               FontAttributes="Bold" 
+               HorizontalOptions="Center" 
+               Margin="0,0,0,10" />
+
+        <!-- Filtro por FormaPago -->
+        <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto">
+            <Picker x:Name="FormaPagoPicker" 
+                    Title="Seleccionar Forma de Pago"
+                    SelectedIndexChanged="OnFormaPagoChanged">
+                <Picker.Items>
+                    <x:String>Mensual</x:String>
+                    <x:String>Semanal</x:String>
+                    <x:String>Quincenal</x:String>
+                    <x:String>Todos</x:String>
+                </Picker.Items>
+            </Picker>
+            <Button Grid.Column="1" 
+                    Text="Filtrar" 
+                    Clicked="OnFilterClicked" 
+                    Margin="10,0,0,0" />
+        </Grid>
+
+        <!-- Lista de Créditos -->
+        <!--<CollectionView x:Name="CreditosList"
+                        ItemsSource="{Binding Creditos}"
+                        SelectionMode="Single"
+                        SelectionChanged="OnSeleccionarCredito">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="10" 
+                           Margin="0,0,0,10" 
+                           CornerRadius="10" 
+                           BackgroundColor="LightGray" 
+                           HasShadow="True"
+                           BorderColor="DarkGray">
+                        <StackLayout>
+                            <Label Text="{Binding TipoCredito}" FontSize="18" FontAttributes="Bold" />
+                            <Label Text="{Binding Observacion}" />
+                            <Label Text="{Binding MontoCredito, StringFormat='Monto: ${0:F2}'}" />
+                            <Label Text="{Binding SumaPago, StringFormat='Pagado: ${0:F2}'}" />
+                            <Label Text="{Binding SaldoTotal, StringFormat='Saldo: ${0:F2}'}" />
+                        </StackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>-->
+
+            <CollectionView ItemsSource="{Binding Creditos}" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="5" Padding="10" BorderColor="Gray" CornerRadius="8">
+                            <StackLayout>
+                                <Label Text="{Binding TipoCredito}" FontAttributes="Bold" FontSize="16"/>
+                                <Label Text="{Binding Observacion}" FontSize="13"/>
+                                <Label Text="Monto: $" FontSize="13">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Monto: $" />
+                                            <Span Text="{Binding MontoCredito}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Text="Pagado: $" FontSize="13">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Pagado: $" />
+                                            <Span Text="{Binding SumaPago}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Text="Saldo: $" FontSize="13">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Saldo: $" />
+                                            <Span Text="{Binding SaldoTotal}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+
+                                <!-- Botón Ver resumen -->
+                                <Button Text="Ver resumen"
+                            Margin="0,10,0,0"
+                            HorizontalOptions="End"
+                            Clicked="OnVerResumenClicked"
+                            CommandParameter="{Binding IdCredito}" />
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

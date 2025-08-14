@@ -1,0 +1,174 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PrestamoApp.ResumenCtaPage"
+             Title="Resumen de Cuenta"
+             BackgroundColor="White">
+    
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="10">
+
+            <!-- Cliente -->
+            <Label Text="Cliente" FontAttributes="Bold" FontSize="18" />
+            <HorizontalStackLayout>
+                <Label Text="Apellido: " FontAttributes="Italic"/>
+                <Label x:Name="lblApellido"/>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <Label Text="Nombre: " FontAttributes="Italic"/>
+                <Label x:Name="lblNombre"/>
+            </HorizontalStackLayout>
+
+            <!-- Datos del crédito -->
+            <Label Text="Crédito" FontAttributes="Bold" FontSize="18" Margin="0,10,0,0"/>
+            <HorizontalStackLayout>
+                <Label Text="Tipo de Crédito: " />
+                <Label x:Name="lblTipoCredito" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <Label Text="Observación: " />
+                <Label x:Name="lblObservacion" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <Label Text="Monto Crédito: " />
+                <Label x:Name="lblMontoCredito" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <Label Text="Suma Pagada: " />
+                <Label x:Name="lblSumaPago" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <Label Text="Saldo Total: " />
+                <Label x:Name="lblSaldoTotal" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <Label Text="Monto Financiado: " />
+                <Label x:Name="lblMontoFinanciado" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <Label Text="Fecha Otorgamiento:" FontAttributes="Bold"/>
+                <Label x:Name="lblFechaOtorgamiento" />
+            </HorizontalStackLayout>
+
+            <Button Text="Eliminar Crédito" 
+        Command="{Binding EliminarCreditoCommand}"
+        IsEnabled="{Binding EliminarCreditoCommand.CanExecute}"
+        BackgroundColor="Red"
+        TextColor="White"
+        HorizontalOptions="End"
+        Margin="0,0,10,0"/>
+
+            <!-- Detalle de cuotas -->
+            <Label Text="Detalle de Cuotas" FontAttributes="Bold" FontSize="18" Margin="0,20,0,10"/>
+            <!--<CollectionView x:Name="cuotasListView">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="Gray" CornerRadius="6" Padding="10" Margin="0,5">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding NumeroCuota, StringFormat='Cuota {0}'}" FontAttributes="Bold"/>
+                                <Label Text="{Binding FechaVto, StringFormat='Vencimiento: {0:dd/MM/yyyy}'}"/>
+                                <Label Text="{Binding MontoPagado, StringFormat='Pagado: {0:C}'}"/>
+                                <Label Text="{Binding Estado, StringFormat='Estado: {0}'}"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>-->
+            <!--<ListView x:Name="cuotasListView"
+          ItemsSource="{Binding Cuotas}"
+          HasUnevenRows="True"
+          SeparatorColor="LightGray"
+          BackgroundColor="White"
+          Margin="10,0">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" Padding="10">
+                                <Label Text="{Binding NumeroCuota}" WidthRequest="60"/>
+                                <Label Text="{Binding FechaVto, StringFormat='{0:dd/MM/yyyy}'}" WidthRequest="100"/>
+                                <Label Text="{Binding MontoPagado, StringFormat='${0:N2}'}" WidthRequest="100"/>
+                                <Label Text="{Binding Estado}" WidthRequest="80"/>
+
+                                --><!-- Botón para borrar la cuota --><!--
+                                <Button Text="🗑"
+                                    BackgroundColor="Red"
+                                    TextColor="White"
+                                    WidthRequest="40"
+                                    HeightRequest="30"
+                                    HorizontalOptions="EndAndExpand"
+                                    Command="{Binding Source={x:Reference cuotasListView}, Path=BindingContext.BorrarCuotaCommand}"
+                                    CommandParameter="{Binding IdCuota}">
+                                    <Button.Triggers>
+                                        <DataTrigger TargetType="Button" Binding="{Binding Estado}" Value="PAGADA">
+                                            <Setter Property="IsVisible" Value="True" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Button" Binding="{Binding Estado}" Value="Parcial">
+                                            <Setter Property="IsVisible" Value="True" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Button" Binding="{Binding Estado}" Value="Impaga">
+                                            <Setter Property="IsVisible" Value="False" />
+                                        </DataTrigger>
+                                    </Button.Triggers>
+                                </Button>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>-->
+
+            <ListView x:Name="cuotasListView"
+          ItemsSource="{Binding Cuotas}"
+          HasUnevenRows="True"
+          SeparatorColor="LightGray"
+          BackgroundColor="White"
+          Margin="10,0">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" Padding="10">
+                                <Label Text="{Binding NumeroCuota}" WidthRequest="60"/>
+                                <Label Text="{Binding FechaVto, StringFormat='{0:dd/MM/yyyy}'}" WidthRequest="100"/>
+                                <Label Text="{Binding FechaPago, Converter={StaticResource DateConverter}}" WidthRequest="100"/>
+                                <Label Text="{Binding MontoPagado, StringFormat='${0:N2}'}" WidthRequest="100"/>
+                                <Label Text="{Binding Estado}" WidthRequest="80"/>
+
+                                <!-- Botón para borrar la cuota -->
+                                <Button Text="🗑"
+                            BackgroundColor="Red"
+                            TextColor="White"
+                            WidthRequest="40"
+                            HeightRequest="30"
+                            HorizontalOptions="EndAndExpand"
+                            Command="{Binding Source={x:Reference cuotasListView}, Path=BindingContext.BorrarCuotaCommand}"
+                            CommandParameter="{Binding IdCuota}">
+                                    <Button.Triggers>
+                                        <DataTrigger TargetType="Button" Binding="{Binding Estado}" Value="PAGADA">
+                                            <Setter Property="IsVisible" Value="True" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Button" Binding="{Binding Estado}" Value="Parcial">
+                                            <Setter Property="IsVisible" Value="True" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Button" Binding="{Binding Estado}" Value="Impaga">
+                                            <Setter Property="IsVisible" Value="False" />
+                                        </DataTrigger>
+                                    </Button.Triggers>
+                                </Button>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+
+
+            <!-- Botón para compartir -->
+            <Button Text="Compartir por WhatsApp"
+                    Clicked="OnShareClicked"
+                    BackgroundColor="Green"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    Margin="0,20,0,0"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

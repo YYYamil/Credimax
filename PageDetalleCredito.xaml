@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PrestamoApp.PageDetalleCredito"
+             Title="PageDetalleCredito">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <Frame BorderColor="LightGray" CornerRadius="10" Padding="15" BackgroundColor="White">
+                <VerticalStackLayout Spacing="10">
+
+                    <Label Text="Cliente:" FontAttributes="Bold" FontSize="18"/>
+                    <Label Text="{Binding ApellidoNombre}" FontSize="16"/>
+
+                    <Label Text="Monto del Crédito:" FontAttributes="Bold" FontSize="18" />
+                    <Label Text="{Binding MontoCredito, StringFormat='${0:N2}'}" FontSize="16"/>
+
+                    <Label Text="Saldo Pendiente:" FontAttributes="Bold" FontSize="18" />
+                    <Label Text="{Binding SaldoCredito, StringFormat='${0:N2}'}" FontSize="16"/>
+
+                    <Label Text="Fecha de Otorgamiento:" FontAttributes="Bold" FontSize="18"/>
+                    <Label Text="{Binding FechaOtorgamiento, StringFormat='{0:dd/MM/yyyy}'}" FontSize="16"/>
+
+                    <Label Text="Estado del Crédito:" FontAttributes="Bold" FontSize="18" />
+                    <Label Text="{Binding EstadoCredito}" FontSize="16"/>
+
+                </VerticalStackLayout>
+            </Frame>
+
+            <Button Text="Volver" 
+                    BackgroundColor="#007BFF" 
+                    TextColor="White" 
+                    CornerRadius="10"
+                    Clicked="OnVolverClicked"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+
+
+
+</ContentPage>
