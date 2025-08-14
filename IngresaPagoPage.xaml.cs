@@ -155,7 +155,7 @@ public partial class IngresaPagoPage : ContentPage
         var lista = new List<(long, string, decimal, string)>();
         using SqlConnection conn = new(connectionString);
         await conn.OpenAsync();
-        string query = "SELECT Id_Credito, TipoCredito,MontoCredito,Observacion FROM Creditos WHERE Id_Personas = 44 AND EstadoCredito = 'ACTIVO'";
+        string query = "SELECT Id_Credito, TipoCredito,MontoCredito,Observacion FROM Creditos WHERE Id_Personas = @idPersona AND EstadoCredito = 'ACTIVO'";
         using SqlCommand cmd = new(query, conn);
         cmd.Parameters.AddWithValue("@idPersona", idPersona);
         using SqlDataReader reader = await cmd.ExecuteReaderAsync();

@@ -21,6 +21,9 @@ public partial class ResumenCtaPage : ContentPage
     //Borrar credito
     public Command EliminarCreditoCommand { get; set; }
 
+    public List<CuotaDetalle> Cuotas { get; set; } = new();
+
+
     // En el constructor:
 
 
@@ -93,21 +96,91 @@ public partial class ResumenCtaPage : ContentPage
         }
     }
 
+    //    private async Task<ResumenCta> GetResumenCtaAsync()
+    //    {
+    //        using SqlConnection conn = new(connectionString);
+    //        await conn.OpenAsync();
+
+    //        SqlCommand cmd = new(@"SELECT
+    //    p.Apellido,
+    //    p.Nombre,
+    //    c.TipoCredito,
+    //    c.observacion,
+    //    c.MontoCredito AS MontoOtorgado,
+    //    ISNULL(SUM(pa.MontoPagado), 0) AS SumaPago,
+    //    (MAX(cu.ImporteCuota) * c.NumCuotas - ISNULL(SUM(pa.MontoPagado), 0)) AS SaldoTotal,
+    //    (MAX(cu.ImporteCuota) * c.NumCuotas) AS MontoFinanciado,
+    //    MAX(cu.ImporteCuota) AS ValorCuota,
+    //    c.NumCuotas,
+    //    c.FechaOtorgamiento
+    //FROM 
+    //    Personas p
+    //    INNER JOIN Creditos c ON p.Id_Personas = c.Id_Personas
+    //    INNER JOIN Cuotas cu ON c.Id_Credito = cu.Id_Credito
+    //    LEFT JOIN Pagos pa ON cu.Id_Cuota = pa.Id_Cuota
+    //WHERE 
+    //    c.EstadoCredito = 'ACTIVO'
+    //    AND c.Id_Credito = @IdCredito
+    //GROUP BY
+    //    p.Apellido,
+    //    p.Nombre,
+    //    c.TipoCredito,
+    //    c.observacion,
+    //    c.MontoCredito,
+    //    c.NumCuotas,
+    //    c.Id_Credito,
+    //    c.FechaOtorgamiento;
+    //"
+    //       , conn);
+
+    //        cmd.Parameters.AddWithValue("@IdCredito", idCredito);
+
+    //        using var reader = await cmd.ExecuteReaderAsync();
+    //        if (await reader.ReadAsync())
+    //        {
+    //            var resumen = new ResumenCta
+    //            {
+    //                Apellido = reader.GetString(0),
+    //                Nombre = reader.GetString(1),
+    //                TipoCredito = reader.GetString(2),
+    //                Observacion = reader.GetString(3),
+    //                MontoCredito = reader.GetDecimal(4),
+    //                SumaPago = reader.GetDecimal(5),
+    //                SaldoTotal = reader.GetDecimal(6),
+    //                MontoFinanciado = reader.GetDecimal(7),
+    //                Cuotas = await GetCuotasAsync(),
+    //                FechaOtorgamiento = reader.GetDateTime(10) // índice según el orden de columnas
+
+    //            };
+    //            return resumen;
+    //        }
+    //        return null;
+    //    }
+
+    //
+
+
+
+    //
+
     private async Task<ResumenCta> GetResumenCtaAsync()
     {
         using SqlConnection conn = new(connectionString);
         await conn.OpenAsync();
 
-        SqlCommand cmd = new(@"SELECT
+        SqlCommand cmd = new(@"
+SELECT
     p.Apellido,
     p.Nombre,
+    p.Cel,                      -- Celular
     c.TipoCredito,
+    c.FormaPago,               -- <<< agregado
     c.observacion,
     c.MontoCredito AS MontoOtorgado,
     ISNULL(SUM(pa.MontoPagado), 0) AS SumaPago,
     (MAX(cu.ImporteCuota) * c.NumCuotas - ISNULL(SUM(pa.MontoPagado), 0)) AS SaldoTotal,
     (MAX(cu.ImporteCuota) * c.NumCuotas) AS MontoFinanciado,
-    MAX(cu.ImporteCuota) AS ValorCuota,
+    MAX(cu.ImporteCuota) AS ValorCuota,   -- <<< el valor de cada cuota
     c.NumCuotas,
     c.FechaOtorgamiento
 FROM 
@@ -121,14 +194,15 @@ WHERE
 GROUP BY
     p.Apellido,
     p.Nombre,
+    p.Cel,
     c.TipoCredito,
+    c.FormaPago,               -- <<< agregado al GROUP BY
     c.observacion,
     c.MontoCredito,
     c.NumCuotas,
     c.Id_Credito,
     c.FechaOtorgamiento;
-"
-       , conn);
+", conn);
 
         cmd.Parameters.AddWithValue("@IdCredito", idCredito);
 
@@ -139,20 +213,23 @@ GROUP BY
             {
                 Apellido = reader.GetString(0),
                 Nombre = reader.GetString(1),
-                TipoCredito = reader.GetString(2),
-                Observacion = reader.GetString(3),
-                MontoCredito = reader.GetDecimal(4),
-                SumaPago = reader.GetDecimal(5),
-                SaldoTotal = reader.GetDecimal(6),
-                MontoFinanciado = reader.GetDecimal(7),
+                Celular = reader.IsDBNull(2) ? "" : reader.GetString(2),
+                TipoCredito = reader.GetString(3),
+                FormaPago = reader.IsDBNull(4) ? "" : reader.GetString(4), // <<< nuevo
+                Observacion = reader.GetString(5),
+                MontoCredito = reader.GetDecimal(6),
+                SumaPago = reader.GetDecimal(7),
+                SaldoTotal = reader.GetDecimal(8),
+                MontoFinanciado = reader.GetDecimal(9),
+                ValorCuota = reader.GetDecimal(10),                         // <<< nuevo
                 Cuotas = await GetCuotasAsync(),
-                FechaOtorgamiento = reader.GetDateTime(10) // índice según el orden de columnas
-
+                FechaOtorgamiento = reader.GetDateTime(12)
             };
             return resumen;
         }
         return null;
     }
+
 
     private async Task<List<CuotaDetalle>> GetCuotasAsync()
     {
@@ -225,27 +302,121 @@ ORDER BY c.NumeroCuota;
         return cuotas;
     }
 
+    //private async void OnShareClicked(object sender, EventArgs e)
+    //{
+    //    if (resumen == null) return;
+
+    //    var culture = CultureInfo.CreateSpecificCulture("es-AR");
+    //    var msg = new StringBuilder();
+
+    //    msg.AppendLine($"📋 RESUMEN DE CUENTA");
+    //    msg.AppendLine($"👤 {resumen.Apellido}, {resumen.Nombre}");
+    //    msg.AppendLine($"📝 {resumen.TipoCredito} - {resumen.Observacion}");
+    //    msg.AppendLine($"💰 Monto Crédito: {resumen.MontoCredito.ToString("C", culture)}");
+    //    msg.AppendLine($"💵 Suma Pago: {resumen.SumaPago.ToString("C", culture)}");
+    //    msg.AppendLine($"📉 Saldo Total: {resumen.SaldoTotal.ToString("C", culture)}");
+    //    msg.AppendLine("\n📅 Cuotas:");
+    //    foreach (var c in resumen.Cuotas)
+    //    {
+    //        msg.AppendLine($"- Cuota {c.NumeroCuota}: {c.FechaVto:dd/MM/yyyy} | {c.MontoPagado.ToString("C", culture)} | {c.Estado}");
+    //    }
+
+    //    await Launcher.OpenAsync($"whatsapp://send?text={Uri.EscapeDataString(msg.ToString())}");
+    //}
+
     private async void OnShareClicked(object sender, EventArgs e)
     {
         if (resumen == null) return;
 
-        var culture = CultureInfo.CreateSpecificCulture("es-AR");
-        var msg = new StringBuilder();
+        var celular = resumen.Celular?.Trim();
 
-        msg.AppendLine($"📋 RESUMEN DE CUENTA");
-        msg.AppendLine($"👤 {resumen.Apellido}, {resumen.Nombre}");
-        msg.AppendLine($"📝 {resumen.TipoCredito} - {resumen.Observacion}");
-        msg.AppendLine($"💰 Monto Crédito: {resumen.MontoCredito.ToString("C", culture)}");
-        msg.AppendLine($"💵 Suma Pago: {resumen.SumaPago.ToString("C", culture)}");
-        msg.AppendLine($"📉 Saldo Total: {resumen.SaldoTotal.ToString("C", culture)}");
-        msg.AppendLine("\n📅 Cuotas:");
-        foreach (var c in resumen.Cuotas)
+        if (!string.IsNullOrWhiteSpace(celular) && celular.All(char.IsDigit) && celular.Length >= 8)
         {
-            msg.AppendLine($"- Cuota {c.NumeroCuota}: {c.FechaVto:dd/MM/yyyy} | {c.MontoPagado.ToString("C", culture)} | {c.Estado}");
-        }
+            if (!celular.StartsWith("54") && !celular.StartsWith("1"))
+                celular = "54" + celular;
 
-        await Launcher.OpenAsync($"whatsapp://send?text={Uri.EscapeDataString(msg.ToString())}");
+            var culture = CultureInfo.CreateSpecificCulture("es-AR");
+
+            //string encabezado =
+            //    $"*📋 RESUMEN DE CUENTA*\n\n" +
+            //    $"• *Cliente:* {resumen.Apellido}, {resumen.Nombre}\n" +
+            //    $"• *Tipo Crédito:* {resumen.TipoCredito}\n" +
+            //    (string.IsNullOrWhiteSpace(resumen.FormaPago) ? "" : $"• *Forma de pago:* {resumen.FormaPago}\n") +
+            //    (string.IsNullOrWhiteSpace(resumen.Observacion) ? "" : $"• *Observación:* {resumen.Observacion}\n") +
+            //    $"• *Valor cuota:* {resumen.ValorCuota.ToString("C", culture)}\n" +
+            //    //$"• *Monto financiado:* {resumen.MontoFinanciado.ToString("C", culture)}\n" +
+            //    //$"• *Suma pagos:* {resumen.SumaPago.ToString("C", culture)}\n" +
+            //    $"• *Saldo total:* {resumen.SaldoTotal.ToString("C", culture)}\n\n" +
+            //    $"*📅 Cuotas:*\n";
+
+            //string detalleCuotas = string.Join("\n", (resumen.Cuotas ?? new List<CuotaDetalle>()).Select(c =>
+            //    $"- {c.NumeroCuota} | {(c.FechaPago.HasValue ? c.FechaPago.Value.ToString("dd/MM/yyyy") : "-")} | {c.MontoPagado.ToString("C", culture)} | {c.Estado}"));
+
+            //string mensaje = encabezado + detalleCuotas;
+
+            string encabezado =
+    $"🌟 *CREDIMAX - Resumen de Cuenta* 🌟\n" +
+    $"────────────────────────────\n" +
+    $"Estimado/a *{resumen.Nombre} {resumen.Apellido}*,\n" +
+    $"A continuación le compartimos el detalle actualizado de su crédito personal:\n\n" +
+    $"• *Tipo de Crédito:* {resumen.TipoCredito}\n" +
+    (string.IsNullOrWhiteSpace(resumen.FormaPago) ? "" : $"• *Forma de Pago:* {resumen.FormaPago}\n") +
+    (string.IsNullOrWhiteSpace(resumen.Observacion) ? "" : $"• *Observaciones:* {resumen.Observacion}\n") +
+    $"• *Valor de cada cuota:* {resumen.ValorCuota.ToString("C", culture)}\n" +
+    $"• *Saldo total pendiente:* {resumen.SaldoTotal.ToString("C", culture)}\n\n" +
+    $"*📅 Detalle de cuotas:*\n" +
+    "```" + // inicio bloque monoespaciado
+    $"{"N°",-4} {"F. Pago",-12} {"Importe",-12} {"Estado",-10}\n" +
+    new string('-', 42) + "\n";
+
+            string detalleCuotas = string.Join("\n", (resumen.Cuotas ?? new List<CuotaDetalle>()).Select(c =>
+                $"{c.NumeroCuota,-4} " +
+                $"{(c.FechaPago.HasValue ? c.FechaPago.Value.ToString("dd/MM/yyyy") : "-"), -12} " +
+                $"{c.MontoPagado.ToString("C", culture),-12} " +
+                $"{c.Estado,-10}"
+            ));
+
+            string pie =
+                "```\n" + // cierre bloque monoespaciado
+                $"────────────────────────────\n" +
+                $"💬 Ante cualquier consulta, recuerde que puede comunicarse con nosotros.\n" +
+                $"Gracias por confiar en *CREDIMAX*.\n" +
+                $"¡Le deseamos un excelente día! 🌞";
+
+            string mensaje = encabezado + detalleCuotas + pie;
+
+
+            try
+            {
+                // 1️⃣ Intentar abrir directamente la app de WhatsApp
+                await Launcher.OpenAsync($"whatsapp://send?phone={celular}&text={Uri.EscapeDataString(mensaje)}");
+            }
+            catch
+            {
+                try
+                {
+                    // 2️⃣ Fallback: abrir en navegador
+                    string fallbackUrl = $"https://wa.me/{celular}?text={Uri.EscapeDataString(mensaje)}";
+                    await Launcher.Default.OpenAsync(fallbackUrl);
+                }
+                catch (Exception ex)
+                {
+                    await DisplayAlert(
+                        "Error crítico",
+                        $"No se pudo abrir WhatsApp.\nDetalles:\n{ex.Message}\n\n" +
+                        "Asegúrese de tener WhatsApp instalado y un número válido.",
+                        "OK");
+                }
+            }
+        }
+        else
+        {
+            await DisplayAlert("Número inválido",
+                "Formato requerido: código de país + número (Ej: 5491123456789)",
+                "OK");
+        }
     }
+
 
 
     private async Task BorrarCuotaAsync(long idCuota)
@@ -387,6 +558,12 @@ public class ResumenCta
     public decimal MontoFinanciado { get; set; }
     public List<CuotaDetalle> Cuotas { get; set; }
     public DateTime FechaOtorgamiento { get; set; }
+    public string Celular { get; set; }
+
+    public string FormaPago { get; set; }      // de Creditos.FormaPago
+    public decimal ValorCuota { get; set; }    // de Cuotas.ImporteCuota (MAX)
+
+
 
 }
 

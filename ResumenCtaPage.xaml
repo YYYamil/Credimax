@@ -3,7 +3,7 @@
              x:Class="PrestamoApp.ResumenCtaPage"
              Title="Resumen de Cuenta"
              BackgroundColor="White">
-    
+
 
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="10">
@@ -59,105 +59,91 @@
         Margin="0,0,10,0"/>
 
             <!-- Detalle de cuotas -->
-            <Label Text="Detalle de Cuotas" FontAttributes="Bold" FontSize="18" Margin="0,20,0,10"/>
-            <!--<CollectionView x:Name="cuotasListView">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame BorderColor="Gray" CornerRadius="6" Padding="10" Margin="0,5">
-                            <VerticalStackLayout>
-                                <Label Text="{Binding NumeroCuota, StringFormat='Cuota {0}'}" FontAttributes="Bold"/>
-                                <Label Text="{Binding FechaVto, StringFormat='Vencimiento: {0:dd/MM/yyyy}'}"/>
-                                <Label Text="{Binding MontoPagado, StringFormat='Pagado: {0:C}'}"/>
-                                <Label Text="{Binding Estado, StringFormat='Estado: {0}'}"/>
-                            </VerticalStackLayout>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>-->
-            <!--<ListView x:Name="cuotasListView"
-          ItemsSource="{Binding Cuotas}"
-          HasUnevenRows="True"
-          SeparatorColor="LightGray"
-          BackgroundColor="White"
-          Margin="10,0">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Orientation="Horizontal" Padding="10">
-                                <Label Text="{Binding NumeroCuota}" WidthRequest="60"/>
-                                <Label Text="{Binding FechaVto, StringFormat='{0:dd/MM/yyyy}'}" WidthRequest="100"/>
-                                <Label Text="{Binding MontoPagado, StringFormat='${0:N2}'}" WidthRequest="100"/>
-                                <Label Text="{Binding Estado}" WidthRequest="80"/>
+            <!-- Título -->
+            <Label Text="Detalle de Cuotas"
+       FontAttributes="Bold"
+       FontSize="18"
+       Margin="0,20,0,10"/>
 
-                                --><!-- Botón para borrar la cuota --><!--
-                                <Button Text="🗑"
-                                    BackgroundColor="Red"
-                                    TextColor="White"
-                                    WidthRequest="40"
-                                    HeightRequest="30"
-                                    HorizontalOptions="EndAndExpand"
-                                    Command="{Binding Source={x:Reference cuotasListView}, Path=BindingContext.BorrarCuotaCommand}"
-                                    CommandParameter="{Binding IdCuota}">
-                                    <Button.Triggers>
-                                        <DataTrigger TargetType="Button" Binding="{Binding Estado}" Value="PAGADA">
-                                            <Setter Property="IsVisible" Value="True" />
-                                        </DataTrigger>
-                                        <DataTrigger TargetType="Button" Binding="{Binding Estado}" Value="Parcial">
-                                            <Setter Property="IsVisible" Value="True" />
-                                        </DataTrigger>
-                                        <DataTrigger TargetType="Button" Binding="{Binding Estado}" Value="Impaga">
-                                            <Setter Property="IsVisible" Value="False" />
-                                        </DataTrigger>
-                                    </Button.Triggers>
-                                </Button>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>-->
+            <!-- Cabeceras -->
+            <Grid Margin="10,0"
+      Padding="10"
+      BackgroundColor="#EFEFEF"
+      ColumnSpacing="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60" />
+                    <!-- N° -->
+                    <ColumnDefinition Width="100" />
+                    <!-- F. Vto -->
+                    <ColumnDefinition Width="100" />
+                    <!-- F. Pago -->
+                    <ColumnDefinition Width="100" />
+                    <!-- Importe -->
+                    <ColumnDefinition Width="80" />
+                    <!-- Estado -->
+                    <!--<ColumnDefinition Width="40" />
+                    --><!-- Borrar -->
+                </Grid.ColumnDefinitions>
 
+                <Label Text="N°"        FontAttributes="Bold" Grid.Column="0" />
+                <Label Text="F. Vto"    FontAttributes="Bold" Grid.Column="1" />
+                <Label Text="F. Pago"   FontAttributes="Bold" Grid.Column="2" />
+                <Label Text="Importe"   FontAttributes="Bold" Grid.Column="3" />
+                <Label Text="Estado"    FontAttributes="Bold" Grid.Column="4" />
+                <!--<Label Text="Borrar"    FontAttributes="Bold" Grid.Column="5" HorizontalTextAlignment="End"/>-->
+            </Grid>
+
+            <!-- Lista de cuotas (se mantiene tu ItemsSource y botón) -->
             <ListView x:Name="cuotasListView"
           ItemsSource="{Binding Cuotas}"
           HasUnevenRows="True"
-          SeparatorColor="LightGray"
-          BackgroundColor="White"
-          Margin="10,0">
+          SeparatorVisibility="None"
+          BackgroundColor="Transparent"
+          Margin="10,0,10,20">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Orientation="Horizontal" Padding="10">
-                                <Label Text="{Binding NumeroCuota}" WidthRequest="60"/>
-                                <Label Text="{Binding FechaVto, StringFormat='{0:dd/MM/yyyy}'}" WidthRequest="100"/>
-                                <Label Text="{Binding FechaPago, Converter={StaticResource DateConverter}}" WidthRequest="100"/>
-                                <Label Text="{Binding MontoPagado, StringFormat='${0:N2}'}" WidthRequest="100"/>
-                                <Label Text="{Binding Estado}" WidthRequest="80"/>
+                            <!-- Recuadro por fila -->
+                            <Frame Padding="0" Margin="0,6" CornerRadius="8"
+                       HasShadow="False" BorderColor="#DDDDDD"
+                       BackgroundColor="White">
+                                <StackLayout Orientation="Horizontal" Padding="10" Spacing="10">
 
-                                <!-- Botón para borrar la cuota -->
-                                <Button Text="🗑"
-                            BackgroundColor="Red"
-                            TextColor="White"
-                            WidthRequest="40"
-                            HeightRequest="30"
-                            HorizontalOptions="EndAndExpand"
-                            Command="{Binding Source={x:Reference cuotasListView}, Path=BindingContext.BorrarCuotaCommand}"
-                            CommandParameter="{Binding IdCuota}">
-                                    <Button.Triggers>
-                                        <DataTrigger TargetType="Button" Binding="{Binding Estado}" Value="PAGADA">
-                                            <Setter Property="IsVisible" Value="True" />
-                                        </DataTrigger>
-                                        <DataTrigger TargetType="Button" Binding="{Binding Estado}" Value="Parcial">
-                                            <Setter Property="IsVisible" Value="True" />
-                                        </DataTrigger>
-                                        <DataTrigger TargetType="Button" Binding="{Binding Estado}" Value="Impaga">
-                                            <Setter Property="IsVisible" Value="False" />
-                                        </DataTrigger>
-                                    </Button.Triggers>
-                                </Button>
-                            </StackLayout>
+                                    <Label Text="{Binding NumeroCuota}" WidthRequest="60" VerticalTextAlignment="Center"/>
+                                    <Label Text="{Binding FechaVto, StringFormat='{0:dd/MM/yyyy}'}" WidthRequest="100" VerticalTextAlignment="Center"/>
+                                    <Label Text="{Binding FechaPago, Converter={StaticResource DateConverter}}" WidthRequest="100" VerticalTextAlignment="Center"/>
+                                    <Label Text="{Binding MontoPagado, StringFormat='${0:N2}'}" WidthRequest="100" VerticalTextAlignment="Center"/>
+                                    <Label Text="{Binding Estado}" WidthRequest="80" VerticalTextAlignment="Center"/>
+
+                                    <!-- Botón borrar (se mantiene tu lógica y comando) -->
+                                    <Button Text="🗑"
+                                BackgroundColor="Red"
+                                TextColor="White"
+                                WidthRequest="40"
+                                HeightRequest="30"
+                                HorizontalOptions="EndAndExpand"
+                                Command="{Binding Source={x:Reference cuotasListView}, Path=BindingContext.BorrarCuotaCommand}"
+                                CommandParameter="{Binding IdCuota}">
+                                        <Button.Triggers>
+                                            <DataTrigger TargetType="Button" Binding="{Binding Estado}" Value="PAGADA">
+                                                <Setter Property="IsVisible" Value="True" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Button" Binding="{Binding Estado}" Value="Parcial">
+                                                <Setter Property="IsVisible" Value="True" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Button" Binding="{Binding Estado}" Value="Impaga">
+                                                <Setter Property="IsVisible" Value="False" />
+                                            </DataTrigger>
+                                        </Button.Triggers>
+                                    </Button>
+
+                                </StackLayout>
+                            </Frame>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
 
 
 
