@@ -50,26 +50,17 @@
                 <Label x:Name="lblFechaOtorgamiento" />
             </HorizontalStackLayout>
 
-            <Button Text="Eliminar Crédito" 
-        Command="{Binding EliminarCreditoCommand}"
-        IsEnabled="{Binding EliminarCreditoCommand.CanExecute}"
-        BackgroundColor="Red"
-        TextColor="White"
-        HorizontalOptions="End"
-        Margin="0,0,10,0"/>
-
-            <!-- Detalle de cuotas -->
+            
             <!-- Título -->
             <Label Text="Detalle de Cuotas"
        FontAttributes="Bold"
        FontSize="18"
-       Margin="0,20,0,10"/>
+       Margin="0,16,0,8" />
 
             <!-- Cabeceras -->
-            <Grid Margin="10,0"
-      Padding="10"
-      BackgroundColor="#EFEFEF"
-      ColumnSpacing="10">
+            <Grid Padding="8" Margin="10,0"
+      ColumnSpacing="8"
+      BackgroundColor="#F5F5F5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="60" />
                     <!-- N° -->
@@ -79,70 +70,67 @@
                     <!-- F. Pago -->
                     <ColumnDefinition Width="100" />
                     <!-- Importe -->
-                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="*" />
                     <!-- Estado -->
-                    <!--<ColumnDefinition Width="40" />
-                    --><!-- Borrar -->
                 </Grid.ColumnDefinitions>
 
-                <Label Text="N°"        FontAttributes="Bold" Grid.Column="0" />
-                <Label Text="F. Vto"    FontAttributes="Bold" Grid.Column="1" />
-                <Label Text="F. Pago"   FontAttributes="Bold" Grid.Column="2" />
-                <Label Text="Importe"   FontAttributes="Bold" Grid.Column="3" />
-                <Label Text="Estado"    FontAttributes="Bold" Grid.Column="4" />
-                <!--<Label Text="Borrar"    FontAttributes="Bold" Grid.Column="5" HorizontalTextAlignment="End"/>-->
+                <Label Text="N°"        FontAttributes="Bold" Grid.Column="0"/>
+                <Label Text="F. Vto"    FontAttributes="Bold" Grid.Column="1"/>
+                <Label Text="F. Pago"   FontAttributes="Bold" Grid.Column="2"/>
+                <Label Text="Importe"   FontAttributes="Bold" Grid.Column="3"/>
+                <Label Text="Estado"    FontAttributes="Bold" Grid.Column="4"/>
             </Grid>
 
-            <!-- Lista de cuotas (se mantiene tu ItemsSource y botón) -->
+            <!-- Lista -->
+            <!-- Lista -->
             <ListView x:Name="cuotasListView"
-          ItemsSource="{Binding Cuotas}"
           HasUnevenRows="True"
           SeparatorVisibility="None"
           BackgroundColor="Transparent"
-          Margin="10,0,10,20">
+          Margin="10,4,10,16">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <!-- Recuadro por fila -->
-                            <Frame Padding="0" Margin="0,6" CornerRadius="8"
-                       HasShadow="False" BorderColor="#DDDDDD"
-                       BackgroundColor="White">
-                                <StackLayout Orientation="Horizontal" Padding="10" Spacing="10">
+                            <Frame Padding="0" Margin="0,6"
+                       CornerRadius="6"
+                       HasShadow="False"
+                       BackgroundColor="White"
+                       BorderColor="#DDDDDD">
+                                <Grid Padding="8" ColumnSpacing="8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="60" />
+                                        <ColumnDefinition Width="100" />
+                                        <ColumnDefinition Width="100" />
+                                        <ColumnDefinition Width="100" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
 
-                                    <Label Text="{Binding NumeroCuota}" WidthRequest="60" VerticalTextAlignment="Center"/>
-                                    <Label Text="{Binding FechaVto, StringFormat='{0:dd/MM/yyyy}'}" WidthRequest="100" VerticalTextAlignment="Center"/>
-                                    <Label Text="{Binding FechaPago, Converter={StaticResource DateConverter}}" WidthRequest="100" VerticalTextAlignment="Center"/>
-                                    <Label Text="{Binding MontoPagado, StringFormat='${0:N2}'}" WidthRequest="100" VerticalTextAlignment="Center"/>
-                                    <Label Text="{Binding Estado}" WidthRequest="80" VerticalTextAlignment="Center"/>
+                                    <!-- N° -->
+                                    <Label Text="{Binding NumeroCuota}"
+                               Grid.Column="0" VerticalTextAlignment="Center"/>
 
-                                    <!-- Botón borrar (se mantiene tu lógica y comando) -->
-                                    <Button Text="🗑"
-                                BackgroundColor="Red"
-                                TextColor="White"
-                                WidthRequest="40"
-                                HeightRequest="30"
-                                HorizontalOptions="EndAndExpand"
-                                Command="{Binding Source={x:Reference cuotasListView}, Path=BindingContext.BorrarCuotaCommand}"
-                                CommandParameter="{Binding IdCuota}">
-                                        <Button.Triggers>
-                                            <DataTrigger TargetType="Button" Binding="{Binding Estado}" Value="PAGADA">
-                                                <Setter Property="IsVisible" Value="True" />
-                                            </DataTrigger>
-                                            <DataTrigger TargetType="Button" Binding="{Binding Estado}" Value="Parcial">
-                                                <Setter Property="IsVisible" Value="True" />
-                                            </DataTrigger>
-                                            <DataTrigger TargetType="Button" Binding="{Binding Estado}" Value="Impaga">
-                                                <Setter Property="IsVisible" Value="False" />
-                                            </DataTrigger>
-                                        </Button.Triggers>
-                                    </Button>
+                                    <!-- F. Vto -->
+                                    <Label Text="{Binding FechaVto, StringFormat='{0:dd/MM/yyyy}'}"
+                               Grid.Column="1" VerticalTextAlignment="Center"/>
 
-                                </StackLayout>
+                                    <!-- F. Pago (null = "-") -->
+                                    <Label Text="{Binding FechaPago, StringFormat='{0:dd/MM/yyyy}', TargetNullValue='-'}"
+                               Grid.Column="2" VerticalTextAlignment="Center"/>
+
+                                    <!-- Importe -->
+                                    <Label Text="{Binding MontoPagado, StringFormat='${0:N2}'}"
+                               Grid.Column="3" VerticalTextAlignment="Center"/>
+
+                                    <!-- Estado -->
+                                    <Label Text="{Binding Estado}"
+                               Grid.Column="4" VerticalTextAlignment="Center"/>
+                                </Grid>
                             </Frame>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
 
 
 

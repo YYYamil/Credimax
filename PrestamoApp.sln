@@ -9,10 +9,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución",
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Android|Any CPU = Android|Any CPU
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{48B11985-D71A-4A45-8065-4CEE56979A7C}.Android|Any CPU.ActiveCfg = Android|Any CPU
+		{48B11985-D71A-4A45-8065-4CEE56979A7C}.Android|Any CPU.Build.0 = Android|Any CPU
+		{48B11985-D71A-4A45-8065-4CEE56979A7C}.Android|Any CPU.Deploy.0 = Android|Any CPU
 		{48B11985-D71A-4A45-8065-4CEE56979A7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{48B11985-D71A-4A45-8065-4CEE56979A7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48B11985-D71A-4A45-8065-4CEE56979A7C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU

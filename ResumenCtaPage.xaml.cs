@@ -15,43 +15,27 @@ public partial class ResumenCtaPage : ContentPage
 
     private ResumenCta resumen;
 
-    public Command<long> BorrarCuotaCommand { get; set; }
+    //public Command<long> BorrarCuotaCommand { get; set; }
 
 
     //Borrar credito
-    public Command EliminarCreditoCommand { get; set; }
+    //public Command EliminarCreditoCommand { get; set; }
 
     public List<CuotaDetalle> Cuotas { get; set; } = new();
 
 
-    // En el constructor:
-
-
-    //public ResumenCtaPage(long idCredito)
-    //{
-    //    InitializeComponent();
-
-    //    BorrarCuotaCommand = new Command<long>(async (idCuota) => await BorrarCuotaAsync(idCuota));
-
-
-
-
-    //    BindingContext = this;
-    //    this.idCredito = idCredito; // Cambiar la variable de clase también
-    //    LoadResumen();
-    //}
-
+    
     public ResumenCtaPage(long idCredito)
     {
         InitializeComponent();
 
-        BorrarCuotaCommand = new Command<long>(async (idCuota) => await BorrarCuotaAsync(idCuota));
+        //BorrarCuotaCommand = new Command<long>(async (idCuota) => await BorrarCuotaAsync(idCuota));
 
         // Inicializar el comando sin verificación inmediata
-        EliminarCreditoCommand = new Command(
-            async () => await EliminarCreditoAsync(),
-            () => false // Inicialmente deshabilitado
-        );
+        //EliminarCreditoCommand = new Command(
+           // async () => await EliminarCreditoAsync(),
+           // () => false // Inicialmente deshabilitado
+        //);
 
         BindingContext = this;
         this.idCredito = idCredito;
@@ -83,11 +67,11 @@ public partial class ResumenCtaPage : ContentPage
                 // Actualizar estado del botón Eliminar
                 // Actualizar estado del comando después de cargar los datos
                 var tieneCuotasPagadas = await TieneCuotasPagadasAsync();
-                EliminarCreditoCommand = new Command(
-                    async () => await EliminarCreditoAsync(),
-                    () => !tieneCuotasPagadas
-                );
-                OnPropertyChanged(nameof(EliminarCreditoCommand)); // Notificar cambio
+                //EliminarCreditoCommand = new Command(
+                   // async () => await EliminarCreditoAsync(),
+                   // () => !tieneCuotasPagadas
+                //);
+                //OnPropertyChanged(nameof(EliminarCreditoCommand)); // Notificar cambio
             }
         }
         catch (Exception ex)
